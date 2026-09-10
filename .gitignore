@@ -1,0 +1,8 @@
+# Files jo GitHub pe upload nahi hone chahiye
+capacity_connect_shareable.html
+CapacityConnect_SIH26075_Team.zip
+mcp_config.json
+PROTOTYPE_DEVELOPMENT_PROMPT.md
+node_modules/
+.DS_Store
+Thumbs.db

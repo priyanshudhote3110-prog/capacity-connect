@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+    ================================================================
+    CAPACITY CONNECT — INDEX.HTML (Main Entry Point)
+    Ministry of Earth Sciences (MoES), Govt. of India
+    SIH 2026 | Problem Statement: SIH26075
+    ================================================================
+
+    YEH FILE KYA HAI?
+    Yeh hamare prototype ka main HTML file hai.
+    Isme poori website ki structure (skeleton) hai.
+    Styling → css/styles.css
+    Data    → js/data.js
+    Logic   → js/app.js
+
+    PAGE SECTIONS:
+    1. Government Top Bar (Tricolor + Accessibility)
+    2. Main Header (Ministry Logo + Navigation)
+    3. Notice Ticker (Official Circulars)
+    4. Home Page
+    5. Course Catalog Page
+    6. Classroom / Learning Desk Page
+    7. Examination / Quiz Page
+    8. Admin Skill Heatmap Page
+    9. Certificate Verification Page
+    10. Leaderboard Page
+    11. Certificate Modal (Popup)
+    12. Footer
+    ================================================================
+  -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capacity Connect — Ministry of Earth Sciences (MoES), Govt. of India</title>
+  <meta name="description" content="Centralized Training & Competency Development Portal for Ministry of Earth Sciences — IMD, INCOIS, IITM, NCMRWF, NIOT, NCPOR. SIH 2026 SIH26075." />
+
+  <!-- STYLESHEET: Poori website ki styling -->
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- EXTERNAL LIBRARIES (CDN se load) -->
+  <!-- Lucide Icons: Free icon library — <i data-lucide="icon-name"> se use hoti hai -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- QRCode.js: Certificate mein dynamic QR code generate karne ke liye -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ============================================================ -->
+  <!-- 1. TRICOLOR RIBBON (Indian Flag Top Stripe) -->
+  <!-- ============================================================ -->
+  <div class="tricolor-stripe"></div>
+
+
+  <!-- ============================================================ -->
+  <!-- 2. GOVERNMENT TOP BAR -->
+  <!-- Accessibility controls, Govt identity, Role Switcher -->
+  <!-- ============================================================ -->
+  <div class="govt-top-bar">
+    <div class="govt-top-bar-inner">
+
+      <!-- Left: Government of India identity text -->
+      <div class="govt-identity">
+        <span class="status-dot"></span>
+        <span>भारत सरकार | Government of India</span>
+        <span class="bar-separator">|</span>
+        <span style="color: #cbd5e1;">पृथ्वी विज्ञान मंत्रालय | Ministry of Earth Sciences</span>
+        <span class="sih-badge" style="display: none;">SIH 2026 : SIH26075</span>
+      </div>
+
+      <!-- Right: Accessibility + Language + Role Switcher -->
+      <div style="display: flex; align-items: center; gap: 12px;">
+
+        <!-- Font Resize Buttons (A-, A, A+) — NIC Accessibility Standard -->
+        <div class="accessibility-controls">
+          <a href="#main-content" style="color: #94a3b8; text-decoration: underline; font-size: 10px;">Skip to content</a>
+          <span class="bar-separator">|</span>
+          <button class="font-btn" onclick="adjustFontSize(-1)" title="Decrease font size">A-</button>
+          <button class="font-btn" onclick="adjustFontSize(0)" title="Default font size">A</button>
+          <button class="font-btn" onclick="adjustFontSize(1)" title="Increase font size">A+</button>
+        </div>
+
+        <!-- Language Toggle: English ↔ Hindi -->
+        <button id="langToggleBtn" class="lang-toggle-btn" onclick="toggleLanguage()">हिन्दी</button>
+
+        <!-- Demo Role Switcher (SIH Judges ke liye) -->
+        <div class="role-switcher">
+          <label>Role:</label>
+          <select id="roleSelector" class="role-select" onchange="switchRole(this.value)">
+            <option value="learner">Scientist / Employee (Learner)</option>
+            <option value="trainer">Faculty / SME (Trainer)</option>
+            <option value="admin">Director / Nodal Officer (Admin)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================ -->
+  <!-- 3. MAIN HEADER (Ministry Logo + Portal Name + User Badge) -->
+  <!-- ============================================================ -->
+  <header class="main-header">
+    <div class="header-inner">
+
+      <!-- Logo Row -->
+      <div class="header-brand-row">
+
+        <!-- Left: National Emblem + Ministry Branding -->
+        <div class="ministry-title-block" onclick="navigateTo('home')">
+          <!-- Ashok Stambh (State Emblem of India) -->
+          <div class="emblem-container">
+            <svg class="emblem-svg" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 0 C45 15, 30 15, 30 30 C30 45, 45 45, 50 60 C55 45, 70 45, 70 30 C70 15, 55 15, 50 0 Z M20 40 C10 50, 15 70, 25 75 C35 70, 30 50, 20 40 Z M80 40 C90 50, 85 70, 75 75 C65 70, 70 50, 80 40 Z M35 75 L65 75 L68 95 L32 95 Z M25 100 L75 100 L80 115 L20 115 Z"/>
+            </svg>
+            <span class="emblem-motto">सत्यमेव जयते</span>
+          </div>
+
+          <!-- Ministry Name & Portal Name -->
+          <div>
+            <div class="ministry-subtitle">पृथ्वी विज्ञान मंत्रालय | Ministry of Earth Sciences</div>
+            <div class="portal-name">
+              Capacity<span class="highlight">Connect</span>
+              <span class="portal-badge">समर्थ पोर्टल</span>
+            </div>
+            <p class="portal-tagline">
+              Centralized Training & Competency Network (IMD • INCOIS • IITM • NCMRWF • NIOT • NCPOR)
+            </p>
+          </div>
+        </div>
+
+        <!-- Right: User Profile Badge -->
+        <div class="user-badge">
+          <div class="user-info-text">
+            <div id="userDisplayName" class="user-name">Dr. Rajesh Sharma</div>
+            <div id="userDisplayDesignation" class="user-designation">Scientist 'D' | ID: MOES-IMD-1094</div>
+          </div>
+          <div class="user-avatar">
+            <span id="userAvatarInitials">RS</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="main-nav">
+        <button class="nav-tab active" data-page="home" onclick="navigateTo('home')">
+          <i data-lucide="home"></i> Home
+        </button>
+        <button class="nav-tab" data-page="courses" onclick="navigateTo('courses')">
+          <i data-lucide="book-open"></i> Training Catalog
+        </button>
+        <button class="nav-tab" data-page="learn" onclick="navigateTo('learn')">
+          <i data-lucide="monitor-play"></i> My Classroom
+        </button>
+        <button class="nav-tab" data-page="admin" onclick="navigateTo('admin')">
+          <i data-lucide="bar-chart-3"></i> Institutional Skill Heatmap
+        </button>
+        <button class="nav-tab" data-page="verify" onclick="navigateTo('verify')">
+          <i data-lucide="shield-check"></i> Verify Certificate
+        </button>
+        <button class="nav-tab" data-page="leaderboard" onclick="navigateTo('leaderboard')">
+          <i data-lucide="award"></i> Merits & Badges
+        </button>
+      </nav>
+    </div>
+  </header>
+
+
+  <!-- ============================================================ -->
+  <!-- 4. OFFICIAL NOTICE TICKER (Scrolling Circular) -->
+  <!-- ============================================================ -->
+  <div class="notice-ticker">
+    <div class="notice-ticker-inner">
+      <span class="notice-label">Official Circular</span>
+      <marquee behavior="scroll" direction="left" style="font-size: 11px;">
+        Circular No. MoES/2026/TRG-04: Mandatory compliance for Doppler Weather Radar Calibration and Slurm HPC Batch Processing is mandated for all Scientist B, C &amp; D cadres by 31st October 2026. — Capacity Building Directorate, MoES HQ
+      </marquee>
+    </div>
+  </div>
+
+
+  <!-- ============================================================ -->
+  <!-- 5. MAIN CONTENT AREA (All Pages Live Here) -->
+  <!-- ============================================================ -->
+  <main class="main-content" id="main-content">
+
+    <!-- ========================================================== -->
+    <!-- PAGE: HOME / PORTAL DESK -->
+    <!-- ========================================================== -->
+    <div id="page-home" class="page-section active">
+
+      <!-- Banner -->
+      <div class="card" style="margin-bottom: 20px;">
+        <div style="max-width: 720px;">
+          <div style="display: inline-block; font-size: 11px; font-weight: 700; color: var(--color-blue); text-transform: uppercase; letter-spacing: 0.5px; background: #eff6ff; padding: 4px 10px; border-radius: 4px; border: 1px solid #bfdbfe; margin-bottom: 8px;">
+            Mission Earth Sciences • Human Resource Capacity Framework
+          </div>
+          <h1 style="font-family: var(--font-serif); font-size: 24px; font-weight: 700; color: var(--color-text-primary); line-height: 1.4; margin-bottom: 8px;">
+            Centralized Geoscience Competency & Training Platform
+          </h1>
+          <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 16px;">
+            Welcome to the official capacity building portal for the Ministry of Earth Sciences. This platform unifies technical training across all autonomous institutes, with automated certification, progress tracking, and ministry-wide skill-gap analytics.
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <button class="btn btn-primary" onclick="navigateTo('courses')">
+              <i data-lucide="book-open"></i> Browse Course Catalog
+            </button>
+            <button class="btn btn-secondary" onclick="navigateTo('admin')">
+              <i data-lucide="bar-chart"></i> Institutional Skill Matrix
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Institute Quick Filter Grid -->
+      <div class="card" style="margin-bottom: 20px;">
+        <div style="font-size: 12px; font-weight: 800; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
+          Participating Autonomous Institutes (Click to filter):
+        </div>
+        <div class="institute-grid">
+          <div class="institute-card" onclick="filterByInstitute('IMD')">
+            <div class="institute-code">IMD</div>
+            <div class="institute-name">Meteorological Dept</div>
+          </div>
+          <div class="institute-card" onclick="filterByInstitute('INCOIS')">
+            <div class="institute-code">INCOIS</div>
+            <div class="institute-name">Ocean Info Services</div>
+          </div>
+          <div class="institute-card" onclick="filterByInstitute('IITM')">
+            <div class="institute-code">IITM</div>
+            <div class="institute-name">Tropical Meteorology</div>
+          </div>
+          <div class="institute-card" onclick="filterByInstitute('NCMRWF')">
+            <div class="institute-code">NCMRWF</div>
+            <div class="institute-name">Medium Range Weather</div>
+          </div>
+          <div class="institute-card" onclick="filterByInstitute('NIOT')">
+            <div class="institute-code">NIOT</div>
+            <div class="institute-name">Ocean Technology</div>
+          </div>
+          <div class="institute-card" onclick="filterByInstitute('NCPOR')">
+            <div class="institute-code">NCPOR</div>
+            <div class="institute-name">Polar & Ocean Research</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics KPI Tiles -->
+      <div class="stats-grid" style="margin-bottom: 20px;">
+        <div class="stat-tile">
+          <div class="stat-label">Registered Scientific Cadres</div>
+          <div class="stat-value">2,840</div>
+          <div class="stat-footnote">Across 6 Autonomous Bodies</div>
+        </div>
+        <div class="stat-tile success">
+          <div class="stat-label">Mandatory Course Compliance</div>
+          <div class="stat-value">92.4%</div>
+          <div class="stat-footnote positive">↑ 4.1% from last fiscal</div>
+        </div>
+        <div class="stat-tile warning">
+          <div class="stat-label">Total Training Hours Logged</div>
+          <div class="stat-value">38,420</div>
+          <div class="stat-footnote">Annual Goal: 50,000 Hours</div>
+        </div>
+        <div class="stat-tile purple">
+          <div class="stat-label">Digital Credentials Issued</div>
+          <div class="stat-value">4,192</div>
+          <div class="stat-footnote" style="color: #7c3aed; font-weight: 600;">Cryptographically Verified</div>
+        </div>
+      </div>
+
+      <!-- Current Assigned Training -->
+      <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title" style="display: flex; align-items: center; gap: 8px;">
+              <i data-lucide="clock" style="width: 18px; height: 18px; color: var(--color-blue);"></i>
+              Mandatory Training Assigned to You
+            </h2>
+            <span style="font-size: 10px; font-weight: 700; background: #fff8e1; color: #92400e; border: 1px solid #fde68a; padding: 3px 10px; border-radius: 4px;">
+              Due: 15 Oct 2026
+            </span>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+            <span class="course-code-badge">MOES/TRG/IMD-401</span>
+            <span style="font-size: 11px; color: var(--color-text-muted);">Atmospheric Sciences & Radar</span>
+          </div>
+
+          <h3 style="font-size: 16px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 6px;">
+            Doppler Weather Radar (DWR) Operational Calibration & Severe Storm Diagnostics
+          </h3>
+          <p style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: 12px;">
+            Standard operating procedure on dual-polarization parameters, sun-tracking calibration, hydrometeor classification, and Western Ghats clutter suppression.
+          </p>
+
+          <!-- Progress Bar -->
+          <div class="progress-container" style="margin-bottom: 16px;">
+            <div class="progress-header">
+              <span>Completion Status (3 of 4 Modules)</span>
+              <span class="progress-value">75%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" style="width: 75%;"></div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <button class="btn btn-primary" onclick="navigateTo('learn')">
+              <i data-lucide="play"></i> Resume Course Modules
+            </button>
+            <button class="btn btn-success" onclick="startExamination()">
+              <i data-lucide="file-check"></i> Take Final Assessment Exam
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================== -->
+    <!-- PAGE: COURSE CATALOG -->
+    <!-- ========================================================== -->
+    <div id="page-courses" class="page-section">
+      <div class="card" style="margin-bottom: 16px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;">
+          <div>
+            <h2 style="font-size: 16px; font-weight: 700; color: var(--color-text-primary);">National Geoscience Training Repository</h2>
+            <p style="font-size: 11px; color: var(--color-text-muted);">Official technical training modules developed by MoES faculty and premier research scientists.</p>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <input type="text" id="catalogSearchInput" oninput="applyCatalogFilters()" placeholder="Search course title or code..." style="padding: 6px 12px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 6px; width: 220px; outline: none;" />
+            <select id="catalogInstSelect" onchange="applyCatalogFilters()" style="padding: 6px 10px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; font-weight: 500;">
+              <option value="ALL">All Institutes</option>
+              <option value="IMD">IMD (Meteorological)</option>
+              <option value="INCOIS">INCOIS (Ocean Services)</option>
+              <option value="IITM">IITM (Tropical Met)</option>
+              <option value="NCMRWF">NCMRWF (HPC Numerical)</option>
+              <option value="NIOT">NIOT (Ocean Tech)</option>
+              <option value="NCPOR">NCPOR (Polar Research)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course cards will be rendered here by JavaScript -->
+      <div id="catalogGrid" class="catalog-grid"></div>
+    </div>
+
+
+    <!-- ========================================================== -->
+    <!-- PAGE: CLASSROOM / LEARNING DESK -->
+    <!-- ========================================================== -->
+    <div id="page-learn" class="page-section">
+      <div class="card">
+        <!-- Classroom Header -->
+        <div class="card-header" style="flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <span class="course-code-badge">MOES/TRG/IMD-401</span>
+              <span style="font-size: 11px; color: var(--color-text-muted);">Faculty: Dr. Anita Desai (Chief Radar SME)</span>
+            </div>
+            <h2 style="font-size: 18px; font-weight: 700; color: var(--color-text-primary);">
+              Doppler Weather Radar (DWR) Operational Calibration
+            </h2>
+          </div>
+          <button class="btn btn-success" onclick="startExamination()">
+            <i data-lucide="check-circle"></i> Attempt Assessment (5 Questions)
+          </button>
+        </div>
+
+        <!-- Two-Column Layout: Player + Syllabus -->
+        <div class="classroom-layout">
+
+          <!-- Left: Video Player + Tabs -->
+          <div>
+            <!-- Video Frame -->
+            <div class="video-frame">
+              <div class="video-header">
+                <span class="video-live-badge">OFFICIAL MOES LECTURE STREAM</span>
+                <span style="color: #94a3b8; font-size: 11px;">Module 2.1: Dual-Pol Interpretation</span>
+              </div>
+
+              <button class="play-btn-center" onclick="toggleVideoPlayback()">
+                <i data-lucide="play" id="videoPlayIcon"></i>
+              </button>
+
+              <div class="video-controls">
+                <div class="seekbar-track"><div class="seekbar-fill"></div></div>
+                <div class="video-time-row">
+                  <span>14:20 / 18:45</span>
+                  <span style="font-family: monospace;">Speed: 1.0x</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content Tabs (Notes, Q&A, Downloads) -->
+            <div style="margin-top: 16px;">
+              <div class="content-tabs">
+                <button class="content-tab-btn active" data-tab="notes" onclick="switchContentTab('notes')">Curriculum Notes</button>
+                <button class="content-tab-btn" data-tab="qa" onclick="switchContentTab('qa')">Faculty Q&A</button>
+                <button class="content-tab-btn" data-tab="downloads" onclick="switchContentTab('downloads')">Download SOPs</button>
+              </div>
+
+              <!-- Tab Panel: Notes -->
+              <div class="tab-panel active" data-tab="notes" style="font-size: 12px; color: var(--color-text-secondary); line-height: 1.8; padding: 12px; background: #f8fafc; border: 1px solid var(--color-border); border-radius: 6px;">
+                <h4 style="font-weight: 700; color: var(--color-text-primary); margin-bottom: 8px;">Key Scientific Objectives:</h4>
+                <p>1. <strong>Differential Reflectivity (ZDR):</strong> Measure differences between horizontal and vertical radar reflectivity to classify rain, hail, and non-meteorological echoes.</p>
+                <p>2. <strong>Ground Clutter Attenuation:</strong> Apply notch filters to eliminate static echoes from mountain topography along Western Ghats radar stations.</p>
+                <p>3. <strong>Sun-Tracking Calibration:</strong> Verify radar receiver gain sensitivity against solar radiation calibration standards (monthly procedure).</p>
+                <div style="margin-top: 12px; padding: 10px; background: #fff8e1; border: 1px solid #fde68a; border-radius: 6px; color: #78350f;">
+                  ⚠ <strong>Exam Notice:</strong> The final assessment includes direct questions on the sun-tracking calibration formula and hail signature thresholds (ZDR near 0 dB + Z > 60 dBZ).
+                </div>
+              </div>
+
+              <!-- Tab Panel: Q&A -->
+              <div class="tab-panel" data-tab="qa" style="font-size: 12px; padding: 12px; background: #f8fafc; border: 1px solid var(--color-border); border-radius: 6px;">
+                <div style="padding: 10px; background: #ffffff; border: 1px solid var(--color-border); border-radius: 6px; margin-bottom: 8px;">
+                  <div style="display: flex; justify-content: space-between; font-weight: 700; color: var(--color-text-primary); margin-bottom: 4px;">
+                    <span>Dr. Vikram Rao (Scientist C, IMD Chennai)</span>
+                    <span style="font-size: 10px; color: var(--color-text-muted);">Yesterday</span>
+                  </div>
+                  <p style="color: var(--color-text-secondary);">Does anomalous propagation (AP) clutter alter ZDR values during pre-monsoon coastal inversions?</p>
+                  <div style="margin-top: 8px; padding-left: 10px; border-left: 2px solid var(--color-blue); color: var(--color-navy); font-size: 11px;">
+                    <strong>Dr. Anita (Instructor):</strong> Yes Vikram, AP causes sharp spikes in correlation coefficient (CC). Use the hydrometeor classification algorithm (HCA) filter.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tab Panel: Downloads -->
+              <div class="tab-panel" data-tab="downloads" style="font-size: 12px; padding: 12px; background: #f8fafc; border: 1px solid var(--color-border); border-radius: 6px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #ffffff; border: 1px solid var(--color-border); border-radius: 6px; margin-bottom: 6px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <i data-lucide="file-text" style="width: 16px; height: 16px; color: #ef4444;"></i>
+                    <span style="font-weight: 500;">MoES_DWR_Standard_Operating_Procedure_2026.pdf (4.2 MB)</span>
+                  </div>
+                  <button class="btn btn-sm btn-secondary">Download</button>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #ffffff; border: 1px solid var(--color-border); border-radius: 6px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <i data-lucide="code" style="width: 16px; height: 16px; color: var(--color-success);"></i>
+                    <span style="font-weight: 500;">Python_Py-ART_Radar_Analysis_Notebook.ipynb (1.8 MB)</span>
+                  </div>
+                  <button class="btn btn-sm btn-secondary">Download</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Syllabus Sidebar -->
+          <div class="syllabus-sidebar">
+            <div class="syllabus-title">Course Structure</div>
+
+            <!-- Module 1: Completed -->
+            <div style="font-size: 11px; font-weight: 600; color: var(--color-text-secondary); margin-bottom: 4px;">Module 1</div>
+            <div class="module-item completed">
+              <div>
+                <div style="font-weight: 600; color: var(--color-text-primary);">Radar Hardware Architecture</div>
+                <div style="font-size: 10px; color: var(--color-success); font-weight: 700;">Completed (100%) ✓</div>
+              </div>
+              <i data-lucide="check-circle" style="width: 16px; height: 16px; color: var(--color-success);"></i>
+            </div>
+
+            <!-- Module 2: Current (Active) -->
+            <div style="font-size: 11px; font-weight: 600; color: var(--color-blue); margin-top: 12px; margin-bottom: 4px;">Module 2 (Active)</div>
+            <div class="module-item current">
+              <div>
+                <div style="font-weight: 700; color: var(--color-navy);">Dual-Pol Echo Interpretation</div>
+                <div style="font-size: 10px; color: var(--color-blue); font-weight: 600;">Currently Active (75%)</div>
+              </div>
+              <i data-lucide="play-circle" style="width: 16px; height: 16px; color: var(--color-blue);"></i>
+            </div>
+
+            <!-- Module 3: Locked -->
+            <div style="font-size: 11px; font-weight: 600; color: var(--color-text-muted); margin-top: 12px; margin-bottom: 4px;">Module 3</div>
+            <div class="module-item locked">
+              <div>
+                <div style="font-weight: 600;">Calibration SOP & Monthly Audit</div>
+                <div style="font-size: 10px;">Locked (complete Module 2 first)</div>
+              </div>
+              <i data-lucide="lock" style="width: 14px; height: 14px; color: var(--color-text-muted);"></i>
+            </div>
+
+            <!-- Final Exam Button -->
+            <div style="margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--color-border);">
+              <button class="btn btn-success" onclick="startExamination()" style="width: 100%; justify-content: center;">
+                <i data-lucide="award"></i> Launch Final Examination
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================== -->
+    <!-- PAGE: EXAMINATION / QUIZ -->
+    <!-- ========================================================== -->
+    <div id="page-quiz" class="page-section">
+      <div class="exam-container">
+
+        <!-- Exam Header -->
+        <div class="exam-header">
+          <div class="exam-title-block">
+            <div style="text-transform: uppercase; font-weight: 700; letter-spacing: 1px; color: #94a3b8;">
+              MoES Central Examination Board
+            </div>
+            <h2>End-of-Module Competency Assessment</h2>
+            <div style="font-size: 11px; color: #94a3b8;">
+              Course: MOES/TRG/IMD-401 | Minimum Qualifying Mark: 60%
+            </div>
+          </div>
+          <div class="exam-timer">
+            <div class="exam-timer-label">Remaining Time</div>
+            <div id="examTimerDisplay" class="exam-timer-value">10:00</div>
+          </div>
+        </div>
+
+        <!-- Question Body -->
+        <div class="exam-body">
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 600; color: var(--color-text-muted); border-bottom: 1px solid var(--color-border); padding-bottom: 10px; margin-bottom: 16px;">
+            <span id="questionNumber">Question 1 of 5</span>
+            <span style="color: var(--color-blue);">Marking: 1.0 Mark | No Negative Marking</span>
+          </div>
+
+          <h3 id="questionText" class="question-text">Loading question...</h3>
+
+          <!-- Options rendered here by JavaScript -->
+          <div id="optionsContainer"></div>
+
+          <!-- Navigation Buttons -->
+          <div class="exam-footer">
+            <button id="prevBtn" class="btn btn-secondary btn-sm" onclick="prevQuizQuestion()" disabled style="opacity: 0.4;">
+              Previous
+            </button>
+            <div style="display: flex; gap: 8px;">
+              <button id="nextBtn" class="btn btn-primary btn-sm" onclick="nextQuizQuestion()">
+                Save & Next
+              </button>
+              <button id="submitBtn" class="btn btn-success btn-sm" onclick="submitExamination()" style="display: none;">
+                Submit Examination
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================== -->
+    <!-- PAGE: ADMIN — INSTITUTIONAL SKILL HEATMAP -->
+    <!-- ========================================================== -->
+    <div id="page-admin" class="page-section">
+      <div class="card">
+
+        <!-- Admin Header -->
+        <div class="card-header" style="flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div style="display: inline-block; font-size: 10px; font-weight: 700; background: #ffebee; color: var(--color-danger); padding: 3px 10px; border-radius: 4px; border: 1px solid #ffcdd2; margin-bottom: 6px;">
+              Executive Directorate Console (Restricted)
+            </div>
+            <h2 style="font-size: 17px; font-weight: 700; color: var(--color-text-primary);">
+              Institutional Competency & Skill Gap Audit Matrix
+            </h2>
+            <p style="font-size: 11px; color: var(--color-text-muted);">
+              Real-time competency assessment across 6 autonomous scientific institutes.
+            </p>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-secondary btn-sm" onclick="exportComplianceCSV()">
+              <i data-lucide="download"></i> Export CSV
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="mandateNewCohort()">
+              <i data-lucide="plus"></i> Mandate New Cohort
+            </button>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 11px; font-weight: 500; color: var(--color-text-secondary); background: #f8fafc; padding: 10px; border: 1px solid var(--color-border); border-radius: 6px; margin-bottom: 16px;">
+          <span style="font-weight: 700; color: var(--color-text-primary);">Audit Legend:</span>
+          <span style="display: flex; align-items: center; gap: 6px;">
+            <span style="width: 12px; height: 12px; border-radius: 3px; background: var(--color-success);"></span>
+            Proficient (>80%)
+          </span>
+          <span style="display: flex; align-items: center; gap: 6px;">
+            <span style="width: 12px; height: 12px; border-radius: 3px; background: #f59e0b;"></span>
+            Moderate (50-79%)
+          </span>
+          <span style="display: flex; align-items: center; gap: 6px;">
+            <span style="width: 12px; height: 12px; border-radius: 3px; background: var(--color-danger);"></span>
+            Critical Deficit (&lt;50%)
+          </span>
+        </div>
+
+        <!-- THE SKILL HEATMAP TABLE -->
+        <div style="overflow-x: auto; border: 1px solid var(--color-border); border-radius: 6px;">
+          <table class="heatmap-table">
+            <thead>
+              <tr>
+                <th style="text-align: left;">Autonomous Institute</th>
+                <th>Doppler Radar Calibration</th>
+                <th>HPC Slurm Scripting</th>
+                <th>Ocean Data Python</th>
+                <th>Deep-Sea Submersible SOP</th>
+                <th>Polar Safety</th>
+                <th>Intervention</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- IMD Row -->
+              <tr>
+                <td style="text-align: left; font-weight: 700;">
+                  IMD (New Delhi)
+                  <div style="font-size: 10px; color: var(--color-text-muted); font-weight: 400;">840 Scientists</div>
+                </td>
+                <td><span class="heat-pill proficient">92% Proficient</span></td>
+                <td><span class="heat-pill moderate">64% Moderate</span></td>
+                <td><span class="heat-pill moderate">71% Moderate</span></td>
+                <td><span class="heat-pill na">N/A</span></td>
+                <td><span class="heat-pill deficit">38% Deficit</span></td>
+                <td>
+                  <button class="btn btn-sm btn-secondary" onclick="mandateTraining('IMD', 'Polar Safety')" style="font-size: 10px;">
+                    Mandate TRG
+                  </button>
+                </td>
+              </tr>
+              <!-- INCOIS Row -->
+              <tr>
+                <td style="text-align: left; font-weight: 700;">
+                  INCOIS (Hyderabad)
+                  <div style="font-size: 10px; color: var(--color-text-muted); font-weight: 400;">420 Scientists</div>
+                </td>
+                <td><span class="heat-pill na">N/A</span></td>
+                <td><span class="heat-pill proficient">85% Proficient</span></td>
+                <td><span class="heat-pill proficient">94% Proficient</span></td>
+                <td><span class="heat-pill moderate">58% Moderate</span></td>
+                <td><span class="heat-pill na">N/A</span></td>
+                <td style="color: var(--color-text-muted); font-size: 11px;">Compliant</td>
+              </tr>
+              <!-- NCMRWF Row -->
+              <tr>
+                <td style="text-align: left; font-weight: 700;">
+                  NCMRWF (Noida)
+                  <div style="font-size: 10px; color: var(--color-text-muted); font-weight: 400;">310 Scientists</div>
+                </td>
+                <td><span class="heat-pill moderate">60% Moderate</span></td>
+                <td><span class="heat-pill proficient">98% Proficient</span></td>
+                <td><span class="heat-pill proficient">89% Proficient</span></td>
+                <td><span class="heat-pill na">N/A</span></td>
+                <td><span class="heat-pill na">N/A</span></td>
+                <td style="color: var(--color-text-muted); font-size: 11px;">Compliant</td>
+              </tr>
+              <!-- NIOT Row -->
+              <tr>
+                <td style="text-align: left; font-weight: 700;">
+                  NIOT (Chennai)
+                  <div style="font-size: 10px; color: var(--color-text-muted); font-weight: 400;">550 Engineers</div>
+                </td>
+                <td><span class="heat-pill na">N/A</span></td>
+                <td><span class="heat-pill deficit">42% Deficit</span></td>
+                <td><span class="heat-pill moderate">66% Moderate</span></td>
+                <td><span class="heat-pill proficient">91% Proficient</span></td>
+                <td><span class="heat-pill deficit">40% Deficit</span></td>
+                <td>
+                  <button class="btn btn-sm btn-danger" onclick="mandateTraining('NIOT', 'HPC Slurm')" style="font-size: 10px;">
+                    Action Required
+                  </button>
+                </td>
+              </tr>
+              <!-- NCPOR Row -->
+              <tr>
+                <td style="text-align: left; font-weight: 700;">
+                  NCPOR (Goa)
+                  <div style="font-size: 10px; color: var(--color-text-muted); font-weight: 400;">260 Scientists</div>
+                </td>
+                <td><span class="heat-pill na">N/A</span></td>
+                <td><span class="heat-pill moderate">52% Moderate</span></td>
+                <td><span class="heat-pill moderate">68% Moderate</span></td>
+                <td><span class="heat-pill na">N/A</span></td>
+                <td><span class="heat-pill proficient">99% Proficient</span></td>
+                <td style="color: var(--color-text-muted); font-size: 11px;">Compliant</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================== -->
+    <!-- PAGE: CERTIFICATE VERIFICATION -->
+    <!-- ========================================================== -->
+    <div id="page-verify" class="page-section">
+      <div class="verify-box">
+        <div class="card" style="text-align: center;">
+          <div style="width: 48px; height: 48px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 50%; margin: 0 auto 12px auto; display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="shield-check" style="width: 24px; height: 24px; color: var(--color-navy);"></i>
+          </div>
+
+          <h2 style="font-size: 18px; font-weight: 700; color: var(--color-text-primary);">Public e-Certificate Verification</h2>
+          <p style="font-size: 11px; color: var(--color-text-muted); margin-bottom: 16px;">Ministry of Earth Sciences Centralized Credential Registry</p>
+
+          <div style="text-align: left; margin-bottom: 16px;">
+            <label style="font-size: 12px; font-weight: 700; color: var(--color-text-secondary); display: block; margin-bottom: 6px;">
+              Enter Certificate Identification Number:
+            </label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="certVerifyInput" value="MOES/2026/IMD/89412" style="flex: 1; padding: 8px 12px; font-size: 12px; font-family: monospace; border: 1px solid #cbd5e1; border-radius: 6px; outline: none;" />
+              <button class="btn btn-primary" onclick="verifyCertificate()">Verify</button>
+            </div>
+          </div>
+
+          <div id="verifyResultBox" class="verify-result">
+            <div style="display: flex; align-items: center; gap: 6px; font-weight: 700; color: var(--color-success);">
+              <i data-lucide="check-circle" style="width: 16px; height: 16px;"></i>
+              <span>Certificate Status: Authenticated & Active</span>
+            </div>
+            <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 8px; line-height: 1.8;">
+              <div><strong>Recipient:</strong> Dr. Rajesh Sharma (IMD)</div>
+              <div><strong>Competency:</strong> Doppler Weather Radar Calibration</div>
+              <div><strong>Issue Authority:</strong> MoES Training Board</div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 12px; justify-content: center;" onclick="openCertificateModal()">
+              View Official Certificate Copy
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================== -->
+    <!-- PAGE: LEADERBOARD / MERITS -->
+    <!-- ========================================================== -->
+    <div id="page-leaderboard" class="page-section">
+      <div class="card">
+        <h2 style="font-size: 16px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 4px;">National Geoscience Capacity Honours</h2>
+        <p style="font-size: 11px; color: var(--color-text-muted); margin-bottom: 20px;">
+          Scientists excelling in specialized technical competencies, mentorship, and research courses.
+        </p>
+
+        <div class="podium-grid">
+          <!-- Rank 1 -->
+          <div class="podium-card gold" style="order: 2;">
+            <div style="font-size: 36px; margin-bottom: 8px;">🥇</div>
+            <div style="font-size: 14px; font-weight: 700; color: var(--color-text-primary);">Dr. A. K. Mitra</div>
+            <div style="font-size: 11px; color: var(--color-text-secondary);">Chief HPC Modeler (NCMRWF)</div>
+            <div style="font-size: 18px; font-weight: 800; color: #92400e; margin-top: 10px;">1,450 Credits</div>
+            <div style="font-size: 10px; color: var(--color-text-muted);">11 Certifications</div>
+          </div>
+          <!-- Rank 2 -->
+          <div class="podium-card" style="order: 1;">
+            <div style="font-size: 32px; margin-bottom: 8px;">🥈</div>
+            <div style="font-size: 14px; font-weight: 700; color: var(--color-text-primary);">Dr. S. C. Shenoi</div>
+            <div style="font-size: 11px; color: var(--color-text-secondary);">Ocean Scientist (INCOIS)</div>
+            <div style="font-size: 16px; font-weight: 800; color: var(--color-text-primary); margin-top: 10px;">1,280 Credits</div>
+            <div style="font-size: 10px; color: var(--color-text-muted);">7 Certifications</div>
+          </div>
+          <!-- Rank 3 -->
+          <div class="podium-card" style="order: 3;">
+            <div style="font-size: 32px; margin-bottom: 8px;">🥉</div>
+            <div style="font-size: 14px; font-weight: 700; color: var(--color-text-primary);">Dr. Sunitha Devi</div>
+            <div style="font-size: 11px; color: var(--color-text-secondary);">Cyclone Specialist (IMD)</div>
+            <div style="font-size: 16px; font-weight: 800; color: var(--color-text-primary); margin-top: 10px;">1,190 Credits</div>
+            <div style="font-size: 10px; color: var(--color-text-muted);">6 Certifications</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+
+  <!-- ============================================================ -->
+  <!-- CERTIFICATE MODAL (Popup Overlay) -->
+  <!-- ============================================================ -->
+  <div id="certificateModal" class="cert-modal-overlay">
+    <div class="cert-modal-box">
+
+      <!-- Toolbar -->
+      <div class="cert-toolbar">
+        <div class="cert-toolbar-title">
+          <i data-lucide="shield-check" style="width: 16px; height: 16px; color: #fbbf24;"></i>
+          <span>Government of India • MoES Official e-Certificate</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-sm" style="background: #1e293b; color: #e2e8f0; border: 1px solid #475569;" onclick="window.print()">
+            <i data-lucide="printer"></i> Print / PDF
+          </button>
+          <button style="background: transparent; border: none; color: #94a3b8; cursor: pointer; padding: 4px;" onclick="closeCertificateModal()">
+            <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Certificate Document -->
+      <div id="printableCertificate" class="cert-document">
+        <div class="cert-frame">
+
+          <!-- Emblem + Ministry Header -->
+          <div class="cert-emblem">
+            <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 0 C45 15, 30 15, 30 30 C30 45, 45 45, 50 60 C55 45, 70 45, 70 30 C70 15, 55 15, 50 0 Z M20 40 C10 50, 15 70, 25 75 C35 70, 30 50, 20 40 Z M80 40 C90 50, 85 70, 75 75 C65 70, 70 50, 80 40 Z M35 75 L65 75 L68 95 L32 95 Z M25 100 L75 100 L80 115 L20 115 Z"/>
+            </svg>
+          </div>
+          <div class="cert-motto">सत्यमेव जयते</div>
+          <div class="cert-govt-text">भारत सरकार | Government of India</div>
+          <div class="cert-ministry-text">MINISTRY OF EARTH SCIENCES</div>
+          <div style="font-size: 10px; color: var(--color-text-muted); font-weight: 600;">Central Capacity Building & Competency Directorate</div>
+
+          <div class="cert-divider"></div>
+
+          <div class="cert-type-text">प्रमाण पत्र | Certificate of Competency</div>
+          <p style="font-size: 12px; color: var(--color-text-muted); font-style: italic; margin-top: 8px;">This is to certify that</p>
+
+          <h2 id="certRecipientName" class="cert-recipient-name">Dr. Rajesh Sharma</h2>
+          <p id="certRecipientDesig" class="cert-recipient-designation">Scientist 'D', India Meteorological Department (IMD)</p>
+
+          <p style="font-size: 12px; color: var(--color-text-secondary); max-width: 480px; margin: 12px auto; line-height: 1.7;">
+            has successfully completed the specialized professional curriculum and demonstrated operational competency with a qualifying mark of <strong id="certScoreValue" style="color: var(--color-success); font-weight: 700;">90%</strong> in:
+          </p>
+
+          <div id="certCourseTitle" class="cert-course-title">
+            Doppler Weather Radar (DWR) Operational Calibration & Severe Storm Diagnostics
+          </div>
+
+          <!-- Signatures + QR -->
+          <div class="cert-sign-row">
+            <div class="cert-signatory">
+              <div class="cert-sign-name">M. Ravichandran</div>
+              <div class="cert-sign-line"></div>
+              <div class="cert-sign-title">Secretary, MoES</div>
+              <div class="cert-sign-subtitle">Government of India</div>
+            </div>
+
+            <div class="cert-qr-block">
+              <div id="certQRContainer" class="cert-qr-wrapper"></div>
+              <div id="certUUID" class="cert-uuid">MOES/2026/IMD/89412</div>
+              <div class="cert-verified-text">DIGITALLY VERIFIED CREDENTIAL</div>
+            </div>
+
+            <div class="cert-signatory">
+              <div class="cert-sign-name">Anita Desai</div>
+              <div class="cert-sign-line"></div>
+              <div class="cert-sign-title">Director General / SME</div>
+              <div class="cert-sign-subtitle">Training Board</div>
+            </div>
+          </div>
+
+          <!-- Hash Footer -->
+          <div class="cert-hash-footer">
+            <span>Hash: 7f83b1657ff1fc53b92dc18148a</span>
+            <span>Issue Date: 10 September 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================ -->
+  <!-- FOOTER -->
+  <!-- ============================================================ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top-row">
+        <div>
+          <div class="footer-brand">पृथ्वी विज्ञान मंत्रालय | Ministry of Earth Sciences</div>
+          <div style="font-size: 10px; color: #64748b;">Prithvi Bhavan, Lodhi Road, New Delhi - 110003</div>
+        </div>
+        <div style="font-size: 11px;">
+          SIH 2026 Innovation Project | <strong style="color: #fbbf24;">SIH26075</strong>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; font-size: 11px; color: #64748b;">
+        <span>Website Content Managed by Ministry of Earth Sciences (MoES), Government of India.</span>
+        <div class="footer-links">
+          <a href="#" onclick="navigateTo('home'); return false;">Home</a>
+          <a href="#" onclick="navigateTo('courses'); return false;">Courses</a>
+          <a href="#" onclick="navigateTo('admin'); return false;">Skill Matrix</a>
+          <a href="#" onclick="navigateTo('verify'); return false;">Verify</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================ -->
+  <!-- SCRIPTS (Order matters! Data pehle, Logic baad mein) -->
+  <!-- ============================================================ -->
+  <!-- Step 1: Mock Database load karo -->
+  <script src="js/data.js"></script>
+
+  <!-- Step 2: Application Logic load karo -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>
