@@ -1,0 +1,437 @@
+/**
+ * theme.css - Design Tokens & Core Color System
+ * Capacity Connect (समर्थ-पृथ्वी) — Ministry of Earth Sciences (MoES)
+ * Phase 2: Enhanced dark mode, animations, Hindi font support
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,300&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
+
+:root {
+  /* MoES Official Palette */
+  --primary-navy: #07172C;
+  --primary-navy-light: #0E294B;
+  --primary-navy-card: #13335D;
+  --ocean-cyan: #008DDA;
+  --ocean-cyan-hover: #0077B6;
+  --ocean-cyan-glow: rgba(0, 141, 218, 0.25);
+  --saffron-gold: #FF9933;
+  --saffron-gold-hover: #E67E22;
+  --forest-green: #10B981;
+  --emergency-red: #EF4444;
+
+  /* Neutrals & Surfaces */
+  --bg-main: #F4F7FB;
+  --bg-surface: #FFFFFF;
+  --bg-subtle: #EDF2F7;
+  --bg-dark-glass: rgba(7, 23, 44, 0.85);
+  --bg-card-glass: rgba(255, 255, 255, 0.88);
+  --bg-input: #FFFFFF;
+  --bg-modal-overlay: rgba(7, 23, 44, 0.6);
+  
+  --border-light: rgba(226, 232, 240, 0.8);
+  --border-medium: #CBD5E1;
+  --border-cyan: rgba(0, 141, 218, 0.4);
+  --border-input: #CBD5E1;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-hindi: 'Noto Sans Devanagari', 'Mangal', sans-serif;
+
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --text-inverse: #FFFFFF;
+  --text-gold: #D97706;
+  --text-heading: #07172C;
+  --text-link: var(--ocean-cyan);
+
+  /* Elevation Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(7, 23, 44, 0.12), 0 10px 10px -5px rgba(7, 23, 44, 0.04);
+  --shadow-cyan-glow: 0 0 20px rgba(0, 141, 218, 0.35);
+  --shadow-card-hover: 0 12px 28px -6px rgba(7, 23, 44, 0.15);
+
+  /* Transitions & Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: all 0.15s ease;
+  --transition-slow: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ============================================
+   DARK MODE TOKENS - Comprehensive Coverage
+   ============================================ */
+body.dark-mode {
+  --bg-main: #0B132B;
+  --bg-surface: #1C2541;
+  --bg-subtle: #243054;
+  --bg-card-glass: rgba(28, 37, 65, 0.9);
+  --bg-input: #1a2240;
+  --bg-modal-overlay: rgba(0, 0, 0, 0.7);
+
+  --border-light: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --border-input: rgba(255, 255, 255, 0.18);
+
+  --text-main: #F1F5F9;
+  --text-muted: #94A3B8;
+  --text-heading: #FFFFFF;
+  --text-gold: #FBBF24;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 12px 28px rgba(0, 0, 0, 0.45);
+}
+
+/* ============================================
+   BASE RESETS & TYPOGRAPHY
+   ============================================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text-heading);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4 {
+  color: #FFFFFF;
+}
+
+/* Hindi text styling */
+.hindi-text, [lang="hi"] {
+  font-family: var(--font-hindi);
+}
+
+a {
+  color: var(--text-link);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+a:hover {
+  color: var(--ocean-cyan-hover);
+}
+
+/* Indian Tricolor Ribbon */
+.tricolor-stripe {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, #FF9933 0%, #FF9933 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #10B981 66.6%, #10B981 100%);
+  position: relative;
+  z-index: 1000;
+}
+
+/* Accessibility Font Resizing */
+body.font-small { font-size: 14px; }
+body.font-normal { font-size: 16px; }
+body.font-large { font-size: 18px; }
+
+/* ============================================
+   DARK MODE: FORM ELEMENTS
+   ============================================ */
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background-color: var(--bg-input) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-input) !important;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #64748B !important;
+}
+
+body.dark-mode option {
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+}
+
+body.dark-mode .modal-card {
+  background: var(--bg-surface);
+  border-color: var(--border-medium);
+}
+
+body.dark-mode .form-label {
+  color: var(--text-main);
+}
+
+body.dark-mode .form-control {
+  background: var(--bg-input);
+  color: var(--text-main);
+  border-color: var(--border-input);
+}
+
+body.dark-mode footer {
+  background: #060e1f !important;
+}
+
+body.dark-mode .gov-top-bar {
+  background-color: #050c1b;
+}
+
+body.dark-mode .main-navbar {
+  background: rgba(28, 37, 65, 0.95);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+body.dark-mode .nav-link {
+  color: #CBD5E1;
+}
+
+body.dark-mode .nav-link:hover,
+body.dark-mode .nav-link.active {
+  color: var(--ocean-cyan);
+  background: rgba(0, 141, 218, 0.12);
+}
+
+body.dark-mode .profile-name {
+  color: #F1F5F9;
+}
+
+body.dark-mode .btn-outline {
+  color: #CBD5E1;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .btn-outline:hover {
+  background: rgba(0, 141, 218, 0.15);
+  border-color: var(--ocean-cyan);
+  color: var(--ocean-cyan);
+}
+
+body.dark-mode .inst-filter-btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: #94A3B8;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .inst-filter-btn.active {
+  background: var(--ocean-cyan);
+  color: #FFF;
+}
+
+body.dark-mode .catalog-search-input {
+  background: var(--bg-input) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-input) !important;
+}
+
+body.dark-mode .divider-text {
+  color: #64748B;
+}
+
+body.dark-mode .divider-text::before,
+body.dark-mode .divider-text::after {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   ANIMATION KEYFRAMES
+   ============================================ */
+
+/* Reveal from bottom */
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Slide in from left */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Slide in from right */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scale pop */
+@keyframes scalePop {
+  0% { transform: scale(0.8); opacity: 0; }
+  70% { transform: scale(1.02); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Shimmer loading effect */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Pulse glow */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 141, 218, 0.3); }
+  50% { box-shadow: 0 0 20px 4px rgba(0, 141, 218, 0.15); }
+}
+
+/* Counter tick up */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Floating particles */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-12px) rotate(2deg); }
+  66% { transform: translateY(-6px) rotate(-1deg); }
+}
+
+/* Spin */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Progress bar */
+@keyframes progressFill {
+  from { width: 0%; }
+  to { width: var(--progress-width, 100%); }
+}
+
+/* Menu slide in */
+@keyframes menuSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes menuSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* Stagger children */
+.stagger-children > * {
+  opacity: 0;
+  animation: revealUp 0.5s ease forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+
+/* Scroll Reveal Classes */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Upload progress animation */
+.upload-progress-bar {
+  height: 6px;
+  background: linear-gradient(90deg, var(--ocean-cyan), var(--saffron-gold));
+  border-radius: 3px;
+  animation: progressFill 2s ease-out forwards;
+}
+
+/* Animated counter */
+.animated-counter {
+  display: inline-block;
+  animation: countUp 0.8s ease-out forwards;
+}

@@ -1,0 +1,92 @@
+/**
+ * responsive.css - Mobile & Adaptive Breakpoints
+ * Capacity Connect LMS — MoES Govt of India
+ */
+
+@media (max-width: 1024px) {
+  .app-container {
+    padding: 0 16px;
+  }
+
+  .nav-inner {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .heatmap-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .cert-container {
+    padding: 24px;
+  }
+
+  .cert-title {
+    font-size: 1.6rem;
+  }
+
+  .cert-candidate {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .gov-top-bar .tools {
+    display: none;
+  }
+
+  .brand-text h1 {
+    font-size: 1.1rem;
+  }
+
+  .brand-emblem {
+    height: 40px;
+  }
+
+  .live-classroom-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .chat-sidebar {
+    height: 380px !important;
+  }
+
+  .exam-layout-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .cert-footer-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .modal-card, .faculty-studio-card {
+    margin: 10px;
+    max-height: 92vh;
+    overflow-y: auto;
+    width: 98% !important;
+  }
+
+  .banner-preset-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-text .ministry-sub {
+    display: none;
+  }
+
+  .btn {
+    padding: 8px 14px;
+    font-size: 0.8125rem;
+  }
+
+  .user-profile-chip .profile-info {
+    display: none;
+  }
+}

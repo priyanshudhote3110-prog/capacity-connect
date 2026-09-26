@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capacity Connect (समर्थ-पृथ्वी) — Ministry of Earth Sciences, Govt. of India</title>
+  <meta name="description" content="Official Enterprise E-Learning & Capacity Building Portal for Ministry of Earth Sciences (MoES) — IMD, INCOIS, IITM, NCMRWF, NIOT, NCPOR. SIH 2026." />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,300&display=swap" rel="stylesheet">
+
+  <!-- Application Styles -->
+  <link rel="stylesheet" href="./src/styles/theme.css" />
+  <link rel="stylesheet" href="./src/styles/components.css" />
+  <link rel="stylesheet" href="./src/styles/responsive.css" />
+</head>
+<body>
+
+  <!-- Dynamic Component Mount Points -->
+  <header id="navbar-mount"></header>
+  <main id="main-content-mount" style="flex: 1;"></main>
+  
+  <!-- Modals -->
+  <div id="auth-modal-mount"></div>
+  <div id="profile-modal-mount"></div>
+  <div id="faculty-modal-mount"></div>
+
+  <!-- Footer -->
+  <footer style="background: var(--primary-navy); color: #94A3B8; padding: 40px 0 20px; border-top: 4px solid var(--saffron-gold); margin-top: auto;">
+    <div class="app-container">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; padding-bottom: 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="National Emblem" style="height: 48px; filter: brightness(0) invert(1);" />
+          <div>
+            <div style="font-weight: 700; color: #FFF; font-size: 1.05rem;">Capacity Connect (समर्थ-पृथ्वी)</div>
+            <div style="font-size: 0.8rem;">Ministry of Earth Sciences, Government of India</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 16px; font-size: 0.8125rem;">
+          <span>IMD</span> · <span>INCOIS</span> · <span>IITM</span> · <span>NCMRWF</span> · <span>NIOT</span> · <span>NCPOR</span>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; font-size: 0.75rem; flex-wrap: wrap; gap: 10px;">
+        <div>
+          © 2026 Ministry of Earth Sciences, Govt. of India. All Rights Reserved.
+        </div>
+        <div>
+          Certified ISO/IEC 27001 & Indian Web Accessibility Guidelines (GIGW 3.0)
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Supabase SDK (v2 for Vanilla JS) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- API Gateway & PostgreSQL Services -->
+  <script src="./src/services/apiGatewayClient.js"></script>
+  <script src="./src/services/supabaseAuth.js"></script>
+  <script src="./src/services/postgresService.js"></script>
+  <script src="./src/config/supabase-config.js"></script>
+
+  <!-- Firebase SDK (compat mode for vanilla JS) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="./src/config/firebase-config.js"></script>
+
+  <!-- Core Libraries -->
+  <script src="./src/vendor/gsap.min.js"></script>
+
+  <!-- Scripts: i18n Engine & Components -->
+  <script src="./src/i18n/i18n.js"></script>
+  <script src="./src/components/CrowdCanvas.js"></script>
+  <script src="./src/components/Navbar.js"></script>
+  <script src="./src/components/AuthModal.js"></script>
+  <script src="./src/components/ProfileModal.js"></script>
+  <script src="./src/components/SettingsModal.js"></script>
+  <script src="./src/components/LiveClassRoom.js"></script>
+  <script src="./src/components/VideoPlayer.js"></script>
+  <script src="./src/components/QuizExam.js"></script>
+  <script src="./src/components/CertificateView.js"></script>
+  <script src="./src/components/SkillHeatmap.js"></script>
+  <script src="./src/components/DoubtForum.js"></script>
+  <script src="./src/components/Leaderboard.js"></script>
+  <script src="./src/components/FacultyStudio.js"></script>
+  <script src="./src/components/LeaderAnalytics.js"></script>
+
+  <!-- Master Application Script -->
+  <script src="./src/pages/App.js"></script>
+</body>
+</html>

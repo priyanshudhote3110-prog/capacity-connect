@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CapacityConnectDatabaseModels",
+  "description": "JSON Data Model specifications for Capacity Connect LMS",
+  "entities": {
+    "User": {
+      "id": "string (UUID)",
+      "customRoleId": "string (e.g. ADM-001, TRN-001, EMP-001)",
+      "name": "string",
+      "email": "string",
+      "phone": "string",
+      "role": "enum: admin | trainer | employee",
+      "institute": "enum: IMD | INCOIS | IITM | NCMRWF | NIOT | NCPOR | HQ",
+      "designation": "string",
+      "department": "string",
+      "avatarUrl": "string (url or base64)",
+      "knowledgePoints": "number",
+      "learningStreak": "number",
+      "isVerified": "boolean",
+      "createdAt": "string (ISO date)"
+    },
+    "Course": {
+      "id": "string (UUID)",
+      "code": "string (e.g. MOES-IMD-401)",
+      "title": "string",
+      "description": "string",
+      "category": "string",
+      "institute": "string",
+      "trainerId": "string",
+      "trainerName": "string",
+      "level": "enum: Beginner | Intermediate | Advanced",
+      "durationMinutes": "number",
+      "thumbnail": "string",
+      "isMandatory": "boolean",
+      "deadline": "string (ISO date)",
+      "modules": "array of Module",
+      "quiz": "Quiz object",
+      "tags": "array of strings"
+    },
+    "LiveClass": {
+      "id": "string (UUID)",
+      "title": "string",
+      "courseId": "string",
+      "courseTitle": "string",
+      "trainerId": "string",
+      "trainerName": "string",
+      "institute": "string",
+      "scheduledStart": "string (ISO date)",
+      "scheduledEnd": "string (ISO date)",
+      "status": "enum: upcoming | live | completed",
+      "streamUrl": "string",
+      "attendeesCount": "number",
+      "liveChat": "array of { id, senderId, senderName, role, message, timestamp }"
+    },
+    "Certificate": {
+      "id": "string (UUID)",
+      "certificateNumber": "string (e.g. MOES-CC-2026-IMD-89412)",
+      "userId": "string",
+      "userName": "string",
+      "customRoleId": "string",
+      "courseId": "string",
+      "courseTitle": "string",
+      "institute": "string",
+      "score": "number",
+      "issuedDate": "string (ISO date)",
+      "verificationUrl": "string",
+      "digitalSignatureHash": "string (SHA-256)",
+      "signatoryTitle": "string"
+    }
+  }
+}

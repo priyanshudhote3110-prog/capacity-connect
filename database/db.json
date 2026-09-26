@@ -1,0 +1,472 @@
+{
+  "users": [
+    {
+      "id": "usr_employee_01",
+      "customRoleId": "EMP-001",
+      "name": "Dr. Rajesh Sharma",
+      "email": "rajesh.sharma@imd.gov.in",
+      "phone": "+91-9876543210",
+      "role": "employee",
+      "institute": "IMD",
+      "designation": "Scientist 'D'",
+      "department": "Monsoon Forecasting & Severe Weather Division",
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "bio": "Operational forecaster focusing on severe convective storms, radar nowcasting, and regional precipitation models.",
+      "knowledgePoints": 1450,
+      "learningStreak": 12,
+      "isVerified": true
+    },
+    {
+      "id": "usr_trainer_01",
+      "customRoleId": "TRN-001",
+      "name": "Dr. Anita Desai",
+      "email": "anita.desai@imd.gov.in",
+      "phone": "+91-9822334455",
+      "role": "trainer",
+      "institute": "IMD",
+      "designation": "Chief Radar Specialist & Head Faculty",
+      "department": "Radar & Satellite Meteorology Division",
+      "avatarUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+      "bio": "Senior Scientist & Lead Instructor for Doppler Weather Radar Operations & Dual-Polarimetric Data Processing.",
+      "knowledgePoints": 6200,
+      "learningStreak": 28,
+      "isVerified": true
+    },
+    {
+      "id": "usr_admin_01",
+      "customRoleId": "ADM-001",
+      "name": "Dr. M. Ravichandran",
+      "email": "secretary@moes.gov.in",
+      "phone": "+91-9811001122",
+      "role": "admin",
+      "institute": "HQ",
+      "designation": "Secretary & Director General",
+      "department": "Ministry Executive Directorate",
+      "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+      "bio": "Secretary to Govt. of India, Ministry of Earth Sciences. Overseeing nationwide ocean, polar, atmospheric, and climate missions.",
+      "knowledgePoints": 9500,
+      "learningStreak": 45,
+      "isVerified": true
+    }
+  ],
+  "courses": [
+    {
+      "id": "crs_imd_01",
+      "code": "MOES-IMD-401",
+      "title": "Advanced Doppler Weather Radar (DWR) Calibration & Operational Nowcasting",
+      "description": "Standard operating procedures for S-band and X-band polarimetric radars, hydrometeor classification, severe storm tracking, and automated nowcasting protocols.",
+      "category": "Atmospheric & Radar Meteorology",
+      "institute": "IMD",
+      "trainerId": "usr_trainer_01",
+      "trainerName": "Dr. Anita Desai",
+      "level": "Advanced",
+      "durationMinutes": 240,
+      "thumbnail": "https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=600&auto=format&fit=crop&q=80",
+      "isMandatory": true,
+      "deadline": "2026-11-30T23:59:59Z",
+      "tags": ["Radar", "IMD", "Nowcasting", "Severe Weather", "Doppler"],
+      "modules": [
+        {
+          "id": "mod_imd_01",
+          "title": "Module 1: Radar Hardware & Transceiver Calibration",
+          "lessons": [
+            { "id": "les_imd_01", "title": "Lesson 1.1: Magnetron vs Klystron Power Output & Noise Calibration", "duration": "24:10", "durationMinutes": 24, "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" },
+            { "id": "les_imd_02", "title": "Lesson 1.2: Antenna Pointing Verification via Sun-Tracking Routines", "duration": "18:35", "durationMinutes": 18, "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" }
+          ]
+        },
+        {
+          "id": "mod_imd_02",
+          "title": "Module 2: Dual-Polarization Moments & Hydrometeor Analysis",
+          "lessons": [
+            { "id": "les_imd_03", "title": "Lesson 2.1: Differential Reflectivity (ZDR) & Correlation Coefficient (RhoHV)", "duration": "31:40", "durationMinutes": 32, "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" }
+          ]
+        }
+      ],
+      "quiz": {
+        "id": "qnz_imd_01",
+        "title": "Doppler Weather Radar (DWR) Calibration Certification Examination",
+        "passingScore": 75,
+        "timeLimitMinutes": 15,
+        "questions": [
+          {
+            "id": "q_imd_1",
+            "question": "Which dual-polarization radar parameter is the primary discriminant between large tumbling hail and heavy rain?",
+            "options": ["Radial Velocity (Vr)", "Differential Reflectivity (ZDR)", "Spectrum Width (SW)", "Total Power (dBZ)"],
+            "correctIndex": 1,
+            "topic": "Dual-Pol Physics",
+            "explanation": "Tumbling hailstones appear spherical on average with ZDR near 0 dB despite very high reflectivity (Z > 55 dBZ)."
+          },
+          {
+            "id": "q_imd_2",
+            "question": "What is the standard Nyquist velocity interval limit before Doppler velocity aliasing occurs?",
+            "options": ["± Vmax = λ * PRF / 4", "± Vmax = λ * PRF / 2", "± Vmax = 2 * λ * PRF", "± Vmax = PRF / (2 * λ)"],
+            "correctIndex": 0,
+            "topic": "Radar Velocity Theory",
+            "explanation": "The maximum unambiguous Doppler velocity is given by Vmax = (wavelength * PRF) / 4."
+          },
+          {
+            "id": "q_imd_3",
+            "question": "A sharp drop in Correlation Coefficient (RhoHV < 0.80) coincident with a hook echo reflectivity signifies:",
+            "options": ["Stratiform snowfall", "Tornado Debris Signature (TDS)", "Pure drizzle", "Ground clutter"],
+            "correctIndex": 1,
+            "topic": "Severe Storm Signatures",
+            "explanation": "Chaotic, non-meteorological debris lofted by a tornado produces a distinct low RhoHV signature."
+          }
+        ]
+      }
+    },
+    {
+      "id": "crs_imd_02",
+      "code": "MOES-IMD-402",
+      "title": "Tropical Cyclone Track Prediction & Dvorak Satellite Intensity Analysis",
+      "description": "Satellite pattern recognition for North Indian Ocean cyclones (Arabian Sea & Bay of Bengal), curved band analysis, central dense overcast (CDO), and automated track warning dissemination.",
+      "category": "Atmospheric & Radar Meteorology",
+      "institute": "IMD",
+      "trainerId": "usr_trainer_01",
+      "trainerName": "Dr. Anita Desai",
+      "level": "Intermediate",
+      "durationMinutes": 180,
+      "thumbnail": "https://images.unsplash.com/photo-1527482797697-8795b05a13fe?w=600&auto=format&fit=crop&q=80",
+      "isMandatory": false,
+      "deadline": "2026-12-10T23:59:59Z",
+      "tags": ["IMD", "Cyclone", "Dvorak", "Satellite", "Bay of Bengal"],
+      "modules": [
+        {
+          "id": "mod_imd2_01",
+          "title": "Module 1: Dvorak Technique Fundamentals",
+          "lessons": [
+            { "id": "les_imd2_01", "title": "Lesson 1.1: Curved Band Logarithmic Spiral Fitting", "duration": "22:15", "durationMinutes": 22, "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" }
+          ]
+        }
+      ],
+      "quiz": {
+        "id": "qnz_imd_02",
+        "title": "Tropical Cyclone Warning & Dvorak Competency Test",
+        "passingScore": 70,
+        "timeLimitMinutes": 10,
+        "questions": [
+          {
+            "id": "qc1",
+            "question": "In the Enhanced Infrared (EIR) Dvorak technique, what does a warm spot enclosed within a cold ring indicate?",
+            "options": ["Extratropical transition", "Eye pattern with high intensity", "Sheared convective system", "Dissipating depression"],
+            "correctIndex": 1,
+            "topic": "Satellite Interpretation",
+            "explanation": "The temperature difference between the warm eye and surrounding cold convective cloud tops determines the T-number."
+          }
+        ]
+      }
+    },
+    {
+      "id": "crs_incois_01",
+      "code": "MOES-INCOIS-301",
+      "title": "Autonomous Argo Profiling Float Telemetry & Real-Time Quality Control (RTQC)",
+      "description": "Complete operational handbook on 2,000m profiling Argo floats, hydraulic buoyancy engines, Iridium SBD telemetry, and INCOIS Real-Time Quality Control (RTQC) flags.",
+      "category": "Oceanographic & Marine Sciences",
+      "institute": "INCOIS",
+      "trainerId": "usr_trainer_01",
+      "trainerName": "Dr. P. Balakrishnan",
+      "level": "Intermediate",
+      "durationMinutes": 210,
+      "thumbnail": "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600&auto=format&fit=crop&q=80",
+      "isMandatory": false,
+      "deadline": "2026-11-15T23:59:59Z",
+      "tags": ["Oceanography", "INCOIS", "Argo", "Telemetry", "CTD"],
+      "modules": [
+        {
+          "id": "mod_incois_01",
+          "title": "Module 1: Hydraulic Buoyancy Engine & Profiling Cycle",
+          "lessons": [
+            { "id": "les_inc_01", "title": "Lesson 1.1: Descent to 1,000m Drift & 2,000m Deep Profile", "duration": "28:10", "durationMinutes": 28, "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" }
+          ]
+        }
+      ],
+      "quiz": {
+        "id": "qnz_incois_01",
+        "title": "Argo Operations & Ocean RTQC Assessment",
+        "passingScore": 75,
+        "timeLimitMinutes": 15,
+        "questions": [
+          {
+            "id": "q_incois_1",
+            "question": "What is the standard parking depth of core Argo floats in the Indian Ocean?",
+            "options": ["500 meters", "1,000 meters", "2,000 meters", "3,500 meters"],
+            "correctIndex": 1,
+            "topic": "Argo Float Dynamics",
+            "explanation": "Standard core Argo floats drift at 1,000 meters for 9 days before dipping to 2,000 meters for ascent."
+          },
+          {
+            "id": "q_incois_2",
+            "question": "Under IOC/WMO Argo data management guidelines, which QC flag represents verified 'Good Data'?",
+            "options": ["QC Flag 0", "QC Flag 1", "QC Flag 2", "QC Flag 4"],
+            "correctIndex": 1,
+            "topic": "Data Quality Control",
+            "explanation": "QC Flag 1 indicates verified Good Data suitable for operational ocean assimilation."
+          }
+        ]
+      }
+    },
+    {
+      "id": "crs_incois_02",
+      "code": "MOES-INCOIS-302",
+      "title": "Indian Ocean Tsunami Early Warning System (ITEWS) & Coastal Inundation Modeling",
+      "description": "Seismic moment tensor estimation, Boussinesq tsunami propagation modeling, coastal BPR (Bottom Pressure Recorder) data assimilation, and SOPs for coastal community alerts.",
+      "category": "Oceanographic & Marine Sciences",
+      "institute": "INCOIS",
+      "trainerId": "usr_trainer_01",
+      "trainerName": "Dr. P. Balakrishnan",
+      "level": "Advanced",
+      "durationMinutes": 190,
+      "thumbnail": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=80",
+      "isMandatory": true,
+      "deadline": "2026-12-15T23:59:59Z",
+      "tags": ["Tsunami", "INCOIS", "Seismic", "ITEWS", "Disaster Management"],
+      "modules": [
+        {
+          "id": "mod_tsunami_01",
+          "title": "Module 1: Subduction Zone Ruptures & Propagation Models",
+          "lessons": [
+            { "id": "les_tsunami_01", "title": "Lesson 1.1: Makran & Sunda Trench Tsunami Dynamics", "duration": "25:40", "durationMinutes": 26, "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" }
+          ]
+        }
+      ],
+      "quiz": {
+        "id": "qnz_incois_02",
+        "title": "ITEWS Tsunami Warning Officer Certification",
+        "passingScore": 80,
+        "timeLimitMinutes": 15,
+        "questions": [
+          {
+            "id": "qt1",
+            "question": "What is the primary ocean sensor deployed by INCOIS to detect open-ocean tsunami waves in real time?",
+            "options": ["Acoustic Doppler Current Profiler (ADCP)", "Bottom Pressure Recorder (BPR) Tsunamimeter", "Wave Rider Buoy only", "Satellite Altimeter"],
+            "correctIndex": 1,
+            "topic": "Tsunamimeters",
+            "explanation": "BPR units deployed on the seafloor measure minute sea-surface height changes caused by passing tsunami waves."
+          }
+        ]
+      }
+    },
+    {
+      "id": "crs_iitm_01",
+      "code": "MOES-IITM-201",
+      "title": "Earth System Modeling (IITM-ESM) & Decadal Climate Change Projections",
+      "description": "Physical parameterization of ocean-atmosphere-land-cryosphere couplings in the IITM Earth System Model, CMIP6 simulations, and Indian monsoon projections under IPCC warming scenarios.",
+      "category": "Climate Science & Modeling",
+      "institute": "IITM",
+      "trainerId": "usr_trainer_01",
+      "trainerName": "Dr. Anita Desai",
+      "level": "Advanced",
+      "durationMinutes": 270,
+      "thumbnail": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80",
+      "isMandatory": false,
+      "deadline": "2026-11-20T23:59:59Z",
+      "tags": ["IITM", "Climate", "IITM-ESM", "Monsoon", "IPCC"],
+      "modules": [
+        {
+          "id": "mod_iitm_01",
+          "title": "Module 1: IITM-ESM Component Architecture",
+          "lessons": [
+            { "id": "les_iitm_01", "title": "Lesson 1.1: Coupling GFS Atmospheric Model with MOM4 Ocean Core", "duration": "30:15", "durationMinutes": 30, "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" }
+          ]
+        }
+      ],
+      "quiz": {
+        "id": "qnz_iitm_01",
+        "title": "Earth System Modeling Competency Exam",
+        "passingScore": 75,
+        "timeLimitMinutes": 20,
+        "questions": [
+          {
+            "id": "qi1",
+            "question": "Which ocean model component is coupled in the IITM Earth System Model (IITM-ESM)?",
+            "options": ["ROMS", "Modular Ocean Model Version 4 (MOM4)", "HYCOM", "NEMO 3.6"],
+            "correctIndex": 1,
+            "topic": "Coupled Modeling",
+            "explanation": "IITM-ESM couples the NCEP GFS atmospheric model with GFDL's Modular Ocean Model (MOM4)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "crs_ncmrwf_01",
+      "code": "MOES-NCMRWF-501",
+      "title": "Slurm Workload Scheduling & MPI Parallel Scaling on 18 PFLOPS HPC",
+      "description": "Optimizing massively parallel weather prediction jobs on Mihir & Pratyush supercomputer clusters, Slurm CPU affinity, Infiniband topologies, and unified model compilation.",
+      "category": "Supercomputing & Computational Modeling",
+      "institute": "NCMRWF",
+      "trainerId": "usr_trainer_01",
+      "trainerName": "Dr. Anita Desai",
+      "level": "Advanced",
+      "durationMinutes": 240,
+      "thumbnail": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&auto=format&fit=crop&q=80",
+      "isMandatory": true,
+      "deadline": "2026-11-20T23:59:59Z",
+      "tags": ["HPC", "NCMRWF", "Supercomputing", "Slurm", "MPI", "Linux"],
+      "modules": [
+        {
+          "id": "mod_ncmrwf_01",
+          "title": "Module 1: Slurm Batch Scripting & CPU Affinity",
+          "lessons": [
+            { "id": "les_ncm_01", "title": "Lesson 1.1: Slurm Node Topology & sbatch Directives", "duration": "20:15", "durationMinutes": 20, "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" }
+          ]
+        }
+      ],
+      "quiz": {
+        "id": "qnz_ncmrwf_01",
+        "title": "Slurm HPC Scalability & Operations Exam",
+        "passingScore": 75,
+        "timeLimitMinutes": 15,
+        "questions": [
+          {
+            "id": "qn1",
+            "question": "Which Slurm directive sets the total number of MPI tasks required for a distributed NWP model run?",
+            "options": ["#SBATCH --nodes=4", "#SBATCH --ntasks=128", "#SBATCH --cpus-per-task=1", "#SBATCH --mem=64G"],
+            "correctIndex": 1,
+            "topic": "Slurm Scripting",
+            "explanation": "#SBATCH --ntasks specifies the exact count of MPI parallel processes to be spawned."
+          },
+          {
+            "id": "qn2",
+            "question": "In Slurm job states, what does 'PD' indicate?",
+            "options": ["Process Done", "Pending (waiting for compute resources)", "Process Deadlocked", "Preempted"],
+            "correctIndex": 1,
+            "topic": "Job Management",
+            "explanation": "'PD' stands for Pending in Slurm scheduler queue."
+          }
+        ]
+      }
+    },
+    {
+      "id": "crs_niot_01",
+      "code": "MOES-NIOT-601",
+      "title": "Deep Ocean Mission: Matsya-6000 Manned Submersible Safety & Engineering",
+      "description": "Manned deep ocean exploration at 6,000m depths: titanium pressure hull, life support systems, acoustic positioning (USBL), and subsea robotics protocols.",
+      "category": "Deep Sea Engineering & Robotics",
+      "institute": "NIOT",
+      "trainerId": "usr_trainer_01",
+      "trainerName": "Dr. P. Balakrishnan",
+      "level": "Advanced",
+      "durationMinutes": 300,
+      "thumbnail": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&auto=format&fit=crop&q=80",
+      "isMandatory": false,
+      "deadline": "2026-12-05T23:59:59Z",
+      "tags": ["NIOT", "Matsya-6000", "Deep Ocean", "Subsea", "Robotics"],
+      "modules": [
+        {
+          "id": "mod_niot_01",
+          "title": "Module 1: Titanium Hull & 600 Bar Pressure Dynamics",
+          "lessons": [
+            { "id": "les_niot_01", "title": "Lesson 1.1: Ti-6Al-4V ELI Spherical Hull Stress Engineering", "duration": "35:10", "durationMinutes": 35, "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" }
+          ]
+        }
+      ],
+      "quiz": {
+        "id": "qnz_niot_01",
+        "title": "Matsya-6000 Subsea Systems Assessment",
+        "passingScore": 75,
+        "timeLimitMinutes": 15,
+        "questions": [
+          {
+            "id": "q_niot_1",
+            "question": "What hydrostatic pressure must the Matsya-6000 titanium sphere withstand at 6,000m depth?",
+            "options": ["60 bar (~6 MPa)", "300 bar (~30 MPa)", "600 bar (~60 MPa)", "1200 bar (~120 MPa)"],
+            "correctIndex": 2,
+            "topic": "Hydrostatic Physics",
+            "explanation": "At 6,000m depth, seawater exerts approximately 600 times atmospheric pressure (600 bar / 60 MPa)."
+          },
+          {
+            "id": "q_niot_2",
+            "question": "What material is utilized for the 2.1m diameter spherical pressure hull of Matsya-6000?",
+            "options": ["Stainless Steel 316L", "Titanium Alloy (Ti-6Al-4V ELI)", "Carbon Fiber Composite", "Marine Aluminum"],
+            "correctIndex": 1,
+            "topic": "Materials Engineering",
+            "explanation": "Extra Low Interstitial (ELI) Titanium alloy Ti-6Al-4V offers high strength-to-weight and fracture toughness."
+          }
+        ]
+      }
+    },
+    {
+      "id": "crs_ncpor_01",
+      "code": "MOES-NCPOR-101",
+      "title": "Antarctic Station Operations (Maitri & Bharati) & Cold Weather Survival Protocols",
+      "description": "Pre-deployment training for Indian Scientific Expeditions to Antarctica and Arctic (Himadri): crevasse safety, extreme cold medicine, waste management under Madrid Protocol, and station micro-grid power.",
+      "category": "Polar & Cryospheric Sciences",
+      "institute": "NCPOR",
+      "trainerId": "usr_trainer_01",
+      "trainerName": "Dr. P. Balakrishnan",
+      "level": "Intermediate",
+      "durationMinutes": 260,
+      "thumbnail": "https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?w=600&auto=format&fit=crop&q=80",
+      "isMandatory": true,
+      "deadline": "2026-11-25T23:59:59Z",
+      "tags": ["NCPOR", "Antarctica", "Polar", "Bharati", "Maitri", "Safety"],
+      "modules": [
+        {
+          "id": "mod_ncpor_01",
+          "title": "Module 1: Polar Survival & Station Protocols",
+          "lessons": [
+            { "id": "les_ncpor_01", "title": "Lesson 1.1: Bharati Station Architecture & Environmental Standards", "duration": "28:50", "durationMinutes": 29, "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" }
+          ]
+        }
+      ],
+      "quiz": {
+        "id": "qnz_ncpor_01",
+        "title": "Antarctic Station Operational Safety Assessment",
+        "passingScore": 75,
+        "timeLimitMinutes": 15,
+        "questions": [
+          {
+            "id": "q_ncpor_1",
+            "question": "What is India's permanent research base in Antarctica located at Larsemann Hills?",
+            "options": ["Dakshin Gangotri", "Maitri Station", "Bharati Station", "Himadri Station"],
+            "correctIndex": 2,
+            "topic": "Indian Polar Bases",
+            "explanation": "Bharati Station (commissioned 2012) is located at Larsemann Hills, East Antarctica."
+          },
+          {
+            "id": "q_ncpor_2",
+            "question": "Under the Antarctic Treaty Environmental Protocol (Madrid Protocol), all solid waste generated must be:",
+            "options": ["Buried under ice shelf", "Incinerated openly", "Packed and shipped back to the Indian mainland", "Discharged into coastal waters"],
+            "correctIndex": 2,
+            "topic": "Environmental Compliance",
+            "explanation": "Zero waste discharge is enforced; all waste is compacted, treated, and returned to mainland ports."
+          }
+        ]
+      }
+    }
+  ],
+  "liveClasses": [
+    {
+      "id": "live_001",
+      "title": "Live Interactive Workshop: Doppler Weather Radar Calibration SOP & Data Ingestion",
+      "courseId": "crs_imd_01",
+      "courseTitle": "Advanced Doppler Weather Radar (DWR) Calibration",
+      "trainerId": "usr_trainer_01",
+      "trainerName": "Dr. Anita Desai",
+      "institute": "IMD",
+      "scheduledStart": "2026-09-23T10:00:00Z",
+      "scheduledEnd": "2026-09-23T11:30:00Z",
+      "status": "live",
+      "streamUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      "attendeesCount": 42,
+      "liveChat": [
+        { "id": "c1", "senderId": "usr_employee_01", "senderName": "Dr. Rajesh Sharma (IMD)", "role": "employee", "message": "Namaskar Dr. Anita. Are we utilizing the dual-pol algorithm for the new Agartala X-band radar?", "timestamp": "10:18 AM" },
+        { "id": "c2", "senderId": "usr_trainer_01", "senderName": "Dr. Anita Desai (Faculty)", "role": "trainer", "message": "Yes Rajesh, the hydrometeor classification table has been updated for north-eastern terrain.", "timestamp": "10:19 AM" }
+      ]
+    }
+  ],
+  "discussions": [
+    {
+      "id": "disc_01",
+      "courseId": "crs_imd_01",
+      "authorName": "Dr. Rajesh Sharma",
+      "authorRole": "Scientist 'D' (IMD)",
+      "title": "Handling ground clutter attenuation during heavy cyclonic precipitation",
+      "content": "During landfall of severe cyclone in coastal Odisha, Doppler velocity de-aliasing experienced fold errors. Has anyone tested the dual-PRF ratio 3:2 vs 4:3?",
+      "upvotes": 14,
+      "commentsCount": 3,
+      "hasFacultyAnswer": true,
+      "createdAt": "2026-09-21T14:30:00Z"
+    }
+  ]
+}
