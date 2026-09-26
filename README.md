@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌊 CAPACITY CONNECT (समर्थ-पृथ्वी)
+#  CAPACITY CONNECT (समर्थ-पृथ्वी)
 ### A Centralized Digital Capacity Building & Learning Management Portal
 **Ministry of Earth Sciences (MoES), Government of India & India Meteorological Department (IMD)**
 
