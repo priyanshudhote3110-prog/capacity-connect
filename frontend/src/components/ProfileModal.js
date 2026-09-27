@@ -179,7 +179,7 @@ class ProfileModalComponent {
                 </span>
               </div>
               <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 1px;">
-                Verified ID: <strong style="color: #4285F4;">${user.email || user.googleEmail || 'priyanshudhote3110@gmail.com'}</strong>
+                Verified ID: <strong style="color: #4285F4;">${user.email || user.googleEmail || 'capacityconnectmofec@gmail.com'}</strong>
               </div>
             </div>
           </div>

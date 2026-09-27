@@ -205,18 +205,18 @@ class AuthModalComponent {
 
       <!-- Account Selection List -->
       <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
-        <!-- Account 1: Priyanshu Dhote -->
+        <!-- Account 1: Capacity Connect Official MoES Admin -->
         <div class="google-acc-card" id="google-acc-priyanshu" style="display: flex; align-items: center; justify-content: space-between; padding: 11px 14px; border-radius: 12px; border: 1.5px solid var(--border-medium); background: var(--bg-surface); cursor: pointer; transition: all 0.2s;">
           <div style="display: flex; align-items: center; gap: 12px;">
             <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #0A2647 0%, #008DDA 100%); color: #FFF; font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0, 141, 218, 0.3);">
-              P
+              CC
             </div>
             <div>
-              <div style="font-weight: 700; font-size: 0.9rem; color: var(--text-main);">Priyanshu Dhote</div>
-              <div style="font-size: 0.77rem; color: var(--text-muted);">priyanshudhote3110@gmail.com</div>
+              <div style="font-weight: 700; font-size: 0.9rem; color: var(--text-main);">Capacity Connect Admin</div>
+              <div style="font-size: 0.77rem; color: var(--text-muted);">capacityconnectmofec@gmail.com</div>
             </div>
           </div>
-          <span class="role-tag admin" style="font-size: 0.65rem;">ADM-002</span>
+          <span class="role-tag admin" style="font-size: 0.65rem;">ADM-001</span>
         </div>
 
         <!-- Account 2: Dr. Rajesh Sharma -->
@@ -521,11 +521,11 @@ class AuthModalComponent {
       if (accPriyanshu) {
         accPriyanshu.addEventListener("click", async () => {
           accPriyanshu.style.opacity = "0.7";
-          accPriyanshu.innerHTML = `<span style="font-size: 0.85rem; color: #4285F4; font-weight: 700;">Verifying Priyanshu Dhote with Google...</span>`;
+          accPriyanshu.innerHTML = `<span style="font-size: 0.85rem; color: #4285F4; font-weight: 700;">Verifying Official Admin with Google...</span>`;
           await this.appState.loginWithGoogle("admin", {
-            email: "priyanshudhote3110@gmail.com",
-            name: "Dr. Priyanshu Dhote",
-            picture: "https://ui-avatars.com/api/?name=Priyanshu+Dhote&background=0A2647&color=fff"
+            email: "capacityconnectmofec@gmail.com",
+            name: "Dr. Priyanshu Dhote (Admin)",
+            picture: "https://ui-avatars.com/api/?name=Capacity+Connect&background=0A2647&color=fff"
           });
           this.isGooglePickerOpen = false;
         });

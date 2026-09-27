@@ -791,8 +791,8 @@ class App {
 
     if (!email) {
       if (roleIntent === "admin") {
-        email = "priyanshudhote3110@gmail.com";
-        name = "Dr. Priyanshu Dhote";
+        email = "capacityconnectmofec@gmail.com";
+        name = "Capacity Connect Admin";
       } else if (roleIntent === "trainer") {
         email = "anita.desai@imd.gov.in";
         name = "Dr. Anita Desai";
@@ -811,7 +811,7 @@ class App {
       picture = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0A2647&color=fff`;
     }
 
-    const isPriyanshuAdmin = email.toLowerCase() === "priyanshudhote3110@gmail.com";
+    const isPriyanshuAdmin = email.toLowerCase() === "capacityconnectmofec@gmail.com" || email.toLowerCase() === "priyanshudhote3110@gmail.com";
     const assignedRole = isPriyanshuAdmin ? "admin" : (roleIntent || "employee");
 
     const payload = {

@@ -236,7 +236,7 @@ class NotificationManagerComponent {
                   OFFICIAL MoES ADMIN CONSOLE
                 </span>
                 <span style="font-size: 0.78rem; color: #94A3B8;">
-                  Targeted Dispatch Gateway · Email (Gmail) &amp; WhatsApp (Twilio/Meta)
+                  Official Dispatcher: <strong style="color: #67E8F9;">capacityconnectmofec@gmail.com</strong> · WhatsApp: Twilio/Meta Sandbox
                 </span>
               </div>
               <h2 style="margin: 0; font-size: 1.55rem; color: #FFF; display: flex; align-items: center; gap: 10px;">
@@ -835,9 +835,9 @@ class NotificationManagerComponent {
         const name = e.currentTarget.getAttribute("data-name") || "Officer";
         const subj = this.composerState.subject || "Official Notification";
         const msg = this.composerState.message || "Please check Capacity Connect portal.";
-        const bodyText = `Namaskar ${name},\n\nYou have received an official notification from Capacity Connect (MoES, Govt. of India):\n\n${msg}\n\nAccess portal: https://capacityconnect.gov.in/#courses\n\n---\nMinistry of Earth Sciences, Government of India`;
+        const bodyText = `Namaskar ${name},\n\nYou have received an official notification from Capacity Connect (Ministry of Earth Sciences, Govt. of India):\n\n${msg}\n\nAccess portal: https://capacityconnect.gov.in/#courses\n\n---\nCapacity Connect Official Notification Gateway\nOfficial Email: capacityconnectmofec@gmail.com\nMinistry of Earth Sciences, Government of India`;
 
-        const mailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(`[MoES Notice] ${subj}`)}&body=${encodeURIComponent(bodyText)}`;
+        const mailUrl = `https://mail.google.com/mail/?authuser=capacityconnectmofec@gmail.com&view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(`[Capacity Connect - MoES] ${subj}`)}&body=${encodeURIComponent(bodyText)}`;
         window.open(mailUrl, "_blank");
 
         // Record real dispatch audit log
@@ -1093,7 +1093,7 @@ class NotificationManagerComponent {
                   const formattedPhone = cleanPhone.startsWith("91") ? cleanPhone : `91${cleanPhone.replace(/^0+/, '')}`;
                   const waText = `🏛️ *Ministry of Earth Sciences (Govt. of India)*\n*Capacity Connect Official Notice*\n\nNamaskar ${emp.name},\n\n📌 *${subj}*\n${msg}\n\n🔗 *Portal Link:* https://capacityconnect.gov.in/#courses\n\n_Official Sovereign Notice under IT Act 2000._`;
                   const waUrl = `https://api.whatsapp.com/send?phone=${formattedPhone}&text=${encodeURIComponent(waText)}`;
-                  const mailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(emp.email)}&su=${encodeURIComponent(`[MoES Notice] ${subj}`)}&body=${encodeURIComponent(`Namaskar ${emp.name},\n\n${msg}\n\nAccess portal: https://capacityconnect.gov.in/#courses\n\n---\nMinistry of Earth Sciences, Govt. of India`)}`;
+                  const mailUrl = `https://mail.google.com/mail/?authuser=capacityconnectmofec@gmail.com&view=cm&fs=1&to=${encodeURIComponent(emp.email)}&su=${encodeURIComponent(`[Capacity Connect - MoES] ${subj}`)}&body=${encodeURIComponent(`Namaskar ${emp.name},\n\n${msg}\n\nAccess portal: https://capacityconnect.gov.in/#courses\n\n---\nCapacity Connect Official Notification Gateway\nOfficial Email: capacityconnectmofec@gmail.com\nMinistry of Earth Sciences, Govt. of India`)}`;
 
                   return `
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 6px; border-bottom: 1px solid #EEF2F6; gap: 10px; flex-wrap: wrap;">
