@@ -12,6 +12,31 @@ const { SEED_SKILL_HEATMAP } = require("../../database/migrations/001_initial_mo
 class AdminController {
   constructor() {
     this.heatmap = JSON.parse(JSON.stringify(SEED_SKILL_HEATMAP));
+    this.competencyBenchmarks = [
+      { code: "RADAR_CAL", name: "Radar Calibration (DWR)", benchmark: 85, currentAvg: 56, gap: -29, criticalInstitutes: ["NIOT", "NCPOR", "INCOIS"], status: "Critical Gap" },
+      { code: "HPC_SLURM", name: "HPC Slurm & Parallel Scaling", benchmark: 85, currentAvg: 79, gap: -6, criticalInstitutes: ["NIOT", "NCPOR"], status: "Moderate Gap" },
+      { code: "OCEAN_ARGO", name: "Ocean Telemetry & Argo Floats", benchmark: 80, currentAvg: 64, gap: -16, criticalInstitutes: ["IMD", "NCMRWF"], status: "Moderate Gap" },
+      { code: "SUBSEA_ROV", name: "Deep-Sea Robotics & Submersibles", benchmark: 80, currentAvg: 40, gap: -40, criticalInstitutes: ["NCMRWF", "IMD", "IITM"], status: "Critical Gap" },
+      { code: "POLAR_SOP", name: "Polar Safety & Extreme Survival", benchmark: 80, currentAvg: 48, gap: -32, criticalInstitutes: ["NCMRWF", "INCOIS", "IITM"], status: "Critical Gap" },
+      { code: "GEM_COMP", name: "GeM Procurement & Vigilance", benchmark: 85, currentAvg: 81, gap: -4, criticalInstitutes: ["IITM"], status: "Target Met" }
+    ];
+    this.directives = [
+      {
+        id: "MoES/DIR/2026/0828-HPC",
+        competencyCode: "HPC_SLURM",
+        competencyName: "HPC Slurm & Parallel Scaling",
+        institutes: ["NIOT", "NCPOR"],
+        deadlineDays: 45,
+        deadlineDate: new Date(Date.now() + 45 * 86400000).toISOString(),
+        targetPersonnel: 180,
+        enrolledCount: 168,
+        priority: "HIGH",
+        mandatedBy: "Dr. M. Ravichandran (Secretary & DG)",
+        dispatchedAt: new Date(Date.now() - 3 * 86400000).toISOString(),
+        status: "In Progress (93% Enrolled)",
+        notes: "Accelerated HPC Slurm queue scheduling for monsoon coupled forecast modelers."
+      }
+    ];
   }
 
   /**
@@ -70,16 +95,6 @@ class AdminController {
         { id: "crs_iitm_01", title: "Earth System Modeling (IITM-ESM) Decadal Projections", institute: "IITM", totalEnrolled: 640, completed: 590, avgScore: 86, status: "Active" }
       ];
 
-      // Competency benchmarks & identified gaps
-      const competencyBenchmarks = [
-        { code: "RADAR_CAL", name: "Radar Calibration (DWR)", benchmark: 85, currentAvg: 56, gap: -29, criticalInstitutes: ["NIOT", "NCPOR", "INCOIS"], status: "Moderate Gap" },
-        { code: "HPC_SLURM", name: "HPC Slurm & Parallel Scaling", benchmark: 85, currentAvg: 79, gap: -6, criticalInstitutes: ["NIOT", "NCPOR"], status: "Near Benchmark" },
-        { code: "OCEAN_ARGO", name: "Ocean Telemetry & Argo Floats", benchmark: 80, currentAvg: 64, gap: -16, criticalInstitutes: ["IMD", "NCMRWF"], status: "Moderate Gap" },
-        { code: "SUBSEA_ROV", name: "Deep-Sea Robotics & Submersibles", benchmark: 80, currentAvg: 40, gap: -40, criticalInstitutes: ["NCMRWF", "IMD", "IITM"], status: "Critical Gap" },
-        { code: "POLAR_SOP", name: "Polar Safety & Extreme Survival", benchmark: 80, currentAvg: 48, gap: -32, criticalInstitutes: ["NCMRWF", "INCOIS", "IITM"], status: "Critical Gap" },
-        { code: "GEM_COMP", name: "GeM Procurement & Vigilance", benchmark: 85, currentAvg: 81, gap: -4, criticalInstitutes: ["IITM"], status: "Target Met" }
-      ];
-
       // Quarterly training growth trends
       const quarterlyTrends = [
         { quarter: "Q4 2025", trainedCount: 1840, certificatesIssued: 520, compliancePct: 68 },
@@ -92,32 +107,35 @@ class AdminController {
       const workforceDistribution = {
         certified: 840,
         inTraining: 1850,
-        gapIdentified: 760,
-        pendingEnrollment: 310,
+        gapIdentified: 445,
+        pendingEnrollment: 315,
         totalWorkforce: 3450
       };
+
+      const criticalCount = this.competencyBenchmarks.filter(b => b.gap < -20).length;
 
       return res.status(200).json({
         success: true,
         summary: {
           totalUsers: users.length,
           totalWorkforce: 3450,
-          totalTrained: 3135,
+          totalTrained: 3135 + (this.directives.length * 45),
           totalLearners: totalEmployees,
           totalTrainers: totalTrainers,
           totalAdmins: totalAdmins,
           totalCourses: courses.length,
-          totalCertificatesIssued: certificates.length,
+          totalCertificatesIssued: 840 + (this.directives.length * 15),
           activeLiveSessions: liveClasses.filter(l => l.status === "live").length,
-          overallComplianceRate: "88.4%",
+          overallComplianceRate: `${Math.min(96, 88.4 + (this.directives.length * 1.8)).toFixed(1)}%`,
           averageExamScore: "86.2%",
-          criticalGapsIdentified: 4
+          criticalGapsIdentified: Math.max(0, criticalCount)
         },
         instituteStats,
         trainingPrograms,
-        competencyBenchmarks,
+        competencyBenchmarks: this.competencyBenchmarks,
         quarterlyTrends,
         workforceDistribution,
+        directives: this.directives,
         skillHeatmap: this.heatmap
       });
     } catch (err) {
@@ -130,33 +148,106 @@ class AdminController {
    */
   async mandateTrainingCohort(req, res) {
     try {
-      const { institute, competencyCode, deadlineDays, courseId } = req.body;
-      if (!institute || !competencyCode) {
-        return res.status(400).json({ success: false, error: "Institute and competencyCode are required" });
+      const {
+        institute,
+        institutes,
+        competencyCode,
+        deadlineDays,
+        courseId,
+        priority = "CRITICAL",
+        targetCount,
+        notes = "",
+        authorizedBy = "Dr. M. Ravichandran (Secretary & DG)"
+      } = req.body;
+
+      const targetInstitutes = Array.isArray(institutes) && institutes.length > 0
+        ? institutes
+        : institute ? [institute] : [];
+
+      if (!competencyCode || targetInstitutes.length === 0) {
+        return res.status(400).json({
+          success: false,
+          error: "Competency code and at least one target institute are required"
+        });
       }
 
-      // Find institute in heatmap
-      const instData = this.heatmap.institutes.find(i => i.code === institute);
-      if (instData && instData.scores[competencyCode] !== undefined) {
-        // Boost target score representation
-        instData.scores[competencyCode] = Math.min(100, instData.scores[competencyCode] + 15);
+      const days = parseInt(deadlineDays, 10) || 30;
+      const directiveId = `MoES/EXEC-DIR/2026/DIR-${Math.floor(1000 + Math.random() * 9000)}`;
+
+      // Update Heatmap scores for target institutes
+      targetInstitutes.forEach(instCode => {
+        const instData = this.heatmap.institutes.find(i => i.code === instCode);
+        if (instData && instData.scores[competencyCode] !== undefined) {
+          instData.scores[competencyCode] = Math.min(100, instData.scores[competencyCode] + 18);
+        }
+      });
+
+      // Update benchmark score in active state
+      const benchmark = this.competencyBenchmarks.find(b => b.code === competencyCode);
+      let competencyName = competencyCode;
+      if (benchmark) {
+        competencyName = benchmark.name;
+        // Boost measured score
+        benchmark.currentAvg = Math.min(95, benchmark.currentAvg + 16);
+        benchmark.gap = benchmark.currentAvg - benchmark.benchmark;
+        benchmark.status = benchmark.gap >= 0 ? "Target Met" : benchmark.gap >= -15 ? "Moderate Gap" : "Critical Gap";
       }
 
-      // Dispatch mandatory notification to all institute users
-      const days = deadlineDays || 30;
+      // Calculate target personnel
+      const headcountPerInst = { IMD: 140, INCOIS: 65, IITM: 70, NCMRWF: 50, NIOT: 90, NCPOR: 45 };
+      const calculatedTarget = targetCount || targetInstitutes.reduce((sum, inst) => sum + (headcountPerInst[inst] || 60), 0);
+
+      // Create official Directive Record
+      const newDirective = {
+        id: directiveId,
+        competencyCode,
+        competencyName,
+        institutes: targetInstitutes,
+        deadlineDays: days,
+        deadlineDate: new Date(Date.now() + days * 86400000).toISOString(),
+        targetPersonnel: calculatedTarget,
+        enrolledCount: calculatedTarget,
+        priority: priority.toUpperCase(),
+        mandatedBy: authorizedBy,
+        dispatchedAt: new Date().toISOString(),
+        status: "Active Mandate (Enforced)",
+        notes: notes || `Mandatory national competency cohort directive enforced across ${targetInstitutes.join(", ")}.`
+      };
+
+      this.directives.unshift(newDirective);
+
+      // Dispatch mandatory notification to all users
       const notif = NotificationModel.create({
         userId: "all",
-        title: `🚨 Mandatory Training Order: ${competencyCode} at ${institute}`,
-        message: `By order of Ministry Executive DG: Mandatory training cohort initiated for ${institute} in ${competencyCode}. Completion required within ${days} days.`,
+        title: `🚨 MINISTERIAL DIRECTIVE: ${directiveId}`,
+        message: `By order of Ministry Executive DG (${authorizedBy}): Mandatory learning cohort enforced for ${targetInstitutes.join(", ")} on '${competencyName}'. Deadline: ${days} days.`,
         type: "mandatory_alert",
-        linkUrl: "#courses"
+        linkUrl: "#leadership"
       });
 
       return res.status(200).json({
         success: true,
-        message: `Mandatory cohort successfully activated for ${institute} on competency '${competencyCode}'. Target deadline: ${days} days.`,
+        message: `Ministerial Directive ${directiveId} ratified and dispatched successfully across ${targetInstitutes.join(", ")}.`,
+        directive: newDirective,
+        updatedBenchmarks: this.competencyBenchmarks,
+        directives: this.directives,
         updatedHeatmap: this.heatmap,
         notification: notif
+      });
+    } catch (err) {
+      return res.status(500).json({ success: false, error: err.message });
+    }
+  }
+
+  /**
+   * Get all active ministerial directives
+   */
+  async getMandateDirectives(req, res) {
+    try {
+      return res.status(200).json({
+        success: true,
+        count: this.directives.length,
+        directives: this.directives
       });
     } catch (err) {
       return res.status(500).json({ success: false, error: err.message });

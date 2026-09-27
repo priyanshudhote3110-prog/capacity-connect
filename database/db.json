@@ -468,5 +468,106 @@
       "hasFacultyAnswer": true,
       "createdAt": "2026-09-21T14:30:00Z"
     }
-  ]
+  ],
+  "employees": [
+    {
+      "id": "emp_01",
+      "customRoleId": "EMP-IMD-01",
+      "name": "Dr. Rajesh Sharma",
+      "email": "rajesh.sharma@imd.gov.in",
+      "phone": "+919876543210",
+      "department": "Radar Meteorology",
+      "institute": "IMD",
+      "designation": "Scientist-E",
+      "email_notify": true,
+      "whatsapp_notify": true,
+      "status": "active",
+      "created_at": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "emp_02",
+      "customRoleId": "TRN-IMD-01",
+      "name": "Dr. Anita Desai",
+      "email": "anita.desai@imd.gov.in",
+      "phone": "+919811223344",
+      "department": "Satellite Meteorology",
+      "institute": "IMD",
+      "designation": "Chief Radar Specialist",
+      "email_notify": true,
+      "whatsapp_notify": true,
+      "status": "active",
+      "created_at": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "emp_03",
+      "customRoleId": "EMP-INC-01",
+      "name": "Dr. P. Balakrishnan",
+      "email": "balakrishnan@incois.gov.in",
+      "phone": "+919712345678",
+      "department": "Ocean Modeling & TEWDSS",
+      "institute": "INCOIS",
+      "designation": "Scientist-F",
+      "email_notify": true,
+      "whatsapp_notify": true,
+      "status": "active",
+      "created_at": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "emp_04",
+      "customRoleId": "EMP-IIT-01",
+      "name": "Dr. Sunita Rao",
+      "email": "sunita.rao@tropmet.res.in",
+      "phone": "+919654321876",
+      "department": "Climate Dynamics (IITM-ESM)",
+      "institute": "IITM",
+      "designation": "Lead Scientist",
+      "email_notify": true,
+      "whatsapp_notify": true,
+      "status": "active",
+      "created_at": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "emp_05",
+      "customRoleId": "EMP-NCM-01",
+      "name": "Er. Vivek Nair",
+      "email": "vivek.nair@ncmrwf.gov.in",
+      "phone": "+919823456789",
+      "department": "HPC Mihir Cluster & Slurm",
+      "institute": "NCMRWF",
+      "designation": "Systems Engineer",
+      "email_notify": true,
+      "whatsapp_notify": true,
+      "status": "active",
+      "created_at": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "emp_06",
+      "customRoleId": "EMP-NIO-01",
+      "name": "Er. A. K. Verma",
+      "email": "akverma@niot.res.in",
+      "phone": "+919412398765",
+      "department": "Matsya-6000 Deep Submersible",
+      "institute": "NIOT",
+      "designation": "Chief Marine Engineer",
+      "email_notify": true,
+      "whatsapp_notify": true,
+      "status": "active",
+      "created_at": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "emp_07",
+      "customRoleId": "EMP-NCP-01",
+      "name": "Dr. Thamban Meloth",
+      "email": "tmeloth@ncpor.res.in",
+      "phone": "+919567812345",
+      "department": "Polar Expeditions & Ice Cores",
+      "institute": "NCPOR",
+      "designation": "Group Director",
+      "email_notify": true,
+      "whatsapp_notify": false,
+      "status": "active",
+      "created_at": "2026-09-01T00:00:00Z"
+    }
+  ],
+  "notification_logs": []
 }

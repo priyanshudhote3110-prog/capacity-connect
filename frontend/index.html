@@ -11,6 +11,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,300&display=swap" rel="stylesheet">
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF9933'><circle cx='12' cy='12' r='10'/></svg>" />
+
   <!-- Application Styles -->
   <link rel="stylesheet" href="./src/styles/theme.css" />
   <link rel="stylesheet" href="./src/styles/components.css" />
@@ -26,6 +29,9 @@
   <div id="auth-modal-mount"></div>
   <div id="profile-modal-mount"></div>
   <div id="faculty-modal-mount"></div>
+  <div id="settings-modal-mount"></div>
+  <div id="mandate-modal-mount"></div>
+  <div id="cert-verify-modal-mount"></div>
 
   <!-- Footer -->
   <footer style="background: var(--primary-navy); color: #94A3B8; padding: 40px 0 20px; border-top: 4px solid var(--saffron-gold); margin-top: auto;">
@@ -71,6 +77,8 @@
 
   <!-- Core Libraries -->
   <script src="./src/vendor/gsap.min.js"></script>
+  <script src="./src/vendor/qrcode.min.js"></script>
+  <script src="./src/vendor/html2pdf.bundle.min.js"></script>
 
   <!-- Scripts: i18n Engine & Components -->
   <script src="./src/i18n/i18n.js"></script>
@@ -88,6 +96,7 @@
   <script src="./src/components/Leaderboard.js"></script>
   <script src="./src/components/FacultyStudio.js"></script>
   <script src="./src/components/LeaderAnalytics.js"></script>
+  <script src="./src/components/NotificationManager.js"></script>
 
   <!-- Master Application Script -->
   <script src="./src/pages/App.js"></script>

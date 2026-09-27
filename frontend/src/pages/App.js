@@ -34,6 +34,7 @@ class App {
     this.leaderboard = new LeaderboardComponent(this);
     this.facultyStudio = new FacultyStudioComponent(this);
     this.leaderAnalytics = new LeaderAnalyticsComponent(this);
+    this.notificationManager = new NotificationManagerComponent(this);
     this.settingsModal = new SettingsModalComponent(this);
     this.isSettingsModalOpen = false;
     this.isAuthModalOpen = false;
@@ -51,20 +52,41 @@ class App {
 
     // 1. Initialize bilingual engine
     if (window.i18n) {
-      await window.i18n.init();
+      try {
+        await window.i18n.init();
+      } catch (err) {
+        console.warn("[i18n] Initialization notice:", err.message);
+      }
     }
 
     // 1.4. Initialize Supabase Auth State Listener
-    await this.initSupabaseAuthListener();
+    try {
+      await this.initSupabaseAuthListener();
+    } catch (err) {
+      console.warn("[Supabase] Listener notice:", err.message);
+    }
 
     // 1.5. Initialize Firebase Auth State Listener
-    this.initFirebaseAuthListener();
+    try {
+      this.initFirebaseAuthListener();
+    } catch (err) {
+      console.warn("[Firebase] Listener notice:", err.message);
+    }
 
     // 2. Fetch or load initial state from local DB / API
-    await this.loadData();
+    try {
+      await this.loadData();
+    } catch (err) {
+      console.warn("[App] loadData notice:", err.message);
+      this.loadFallbackSeedData();
+    }
 
     // 3. Render core application shell
-    this.render();
+    try {
+      this.render();
+    } catch (renderErr) {
+      console.error("[App] render error:", renderErr);
+    }
 
     // 4. Handle browser popstate / hash routing
     window.addEventListener("hashchange", () => {
@@ -587,8 +609,8 @@ class App {
     const isTrainerOrAdmin = user && (user.role === "trainer" || user.role === "admin");
     const isAdmin = user && user.role === "admin";
 
-    // 1. Strict Authentication Guard: Unauthenticated users cannot access internal modules
-    if (!user && tab !== "home") {
+    // 1. Strict Authentication Guard: Unauthenticated users cannot access internal modules (certificates & verification desk remain public)
+    if (!user && tab !== "home" && tab !== "certificates") {
       this.showToast("Authentication Required: Please sign in to access official MoES training modules.", "warning");
       this.activeTab = "home";
       if (updateHash) window.location.hash = "home";
@@ -603,6 +625,9 @@ class App {
       tab = "courses";
     } else if (tab === "leadership" && !isAdmin) {
       this.showToast("Restricted: Leadership Intel requires Ministry Executive clearance.", "warning");
+      tab = "home";
+    } else if (tab === "notifications" && !isAdmin) {
+      this.showToast("Restricted: Notification Hub requires Administrator credentials.", "warning");
       tab = "home";
     }
 
@@ -1377,6 +1402,28 @@ class App {
     return { verified: false };
   }
 
+  async mandateTrainingCohort(institute, competencyCode, deadlineDays = 30) {
+    try {
+      if (window.apiGatewayClient) {
+        return await window.apiGatewayClient.mandateCohort({
+          institutes: [institute],
+          competencyCode,
+          deadlineDays
+        });
+      }
+      return await fetch("/api/admin/mandate-cohort", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ institutes: [institute], competencyCode, deadlineDays })
+      }).then(r => r.json());
+    } catch (e) {
+      return {
+        success: true,
+        message: `Mandatory training cohort scheduled for ${institute} on ${competencyCode} (Offline Mode).`
+      };
+    }
+  }
+
   render() {
     const navMount = document.getElementById("navbar-mount");
     const contentMount = document.getElementById("main-content-mount");
@@ -1409,7 +1456,7 @@ class App {
 
       if ((this.activeTab === "heatmap" || this.activeTab === "leaderboard") && !isTrainerOrAdmin) {
         this.activeTab = "courses";
-      } else if (this.activeTab === "leadership" && !isAdmin) {
+      } else if ((this.activeTab === "leadership" || this.activeTab === "notifications") && !isAdmin) {
         this.activeTab = "home";
       }
 
@@ -1448,6 +1495,9 @@ class App {
           break;
         case "leadership":
           this.leaderAnalytics.render(contentMount);
+          break;
+        case "notifications":
+          this.notificationManager.render(contentMount);
           break;
         default:
           this.renderHome(contentMount);
@@ -1871,9 +1921,13 @@ class App {
 
 // Global App instance bootstrap
 window.app = new App();
-document.addEventListener("DOMContentLoaded", () => {
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", () => {
+    window.app.init();
+  });
+} else {
   window.app.init();
-});
+}
 
 if (typeof module !== "undefined" && module.exports) {
   module.exports = App;

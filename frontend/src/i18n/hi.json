@@ -2,12 +2,12 @@
   "nav": {
     "home": "होम",
     "courses": "पाठ्यक्रम",
-    "liveClasses": "लाइव कक्षा",
-    "examinations": "परीक्षा केंद्र",
+    "liveClasses": "लाइव",
+    "examinations": "परीक्षा",
     "certificates": "प्रमाणपत्र",
-    "heatmap": "कौशल हीटमैप",
-    "forum": "संदेह मंच",
-    "leaderboard": "लीडरबोर्ड",
+    "heatmap": "हीटमैप",
+    "forum": "फोरम",
+    "leaderboard": "रैंक",
     "login": "साइन इन",
     "logout": "लॉग आउट",
     "profile": "प्रोफाइल सेटअप",
@@ -19,7 +19,8 @@
     "roleEmployee": "शिक्षार्थी (डॉ. राजेश)",
     "roleTrainer": "प्रशिक्षक (डॉ. अनिता)",
     "roleAdmin": "निदेशक (डॉ. रविचंद्रन)",
-    "leadership": "नेतृत्व डैशबोर्ड",
+    "leadership": "नेतृत्व",
+    "notifications": "सूचना",
     "settings": "सेटिंग्स"
   },
   "roles": {

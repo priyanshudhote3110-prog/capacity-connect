@@ -1,13 +1,13 @@
 {
   "nav": {
     "home": "Home",
-    "courses": "Courses & Playlists",
-    "liveClasses": "Live Classroom",
-    "examinations": "Test Center",
-    "certificates": "Certificates",
-    "heatmap": "Skill Heatmap",
-    "forum": "Doubt Forum",
-    "leaderboard": "Leaderboard",
+    "courses": "Courses",
+    "liveClasses": "Live",
+    "examinations": "Tests",
+    "certificates": "Certs",
+    "heatmap": "Heatmap",
+    "forum": "Forum",
+    "leaderboard": "Ranks",
     "login": "Sign In",
     "logout": "Sign Out",
     "profile": "Profile Setup",
@@ -19,7 +19,8 @@
     "roleEmployee": "Learner (Dr. Rajesh)",
     "roleTrainer": "Faculty (Dr. Anita)",
     "roleAdmin": "Director (Dr. Ravichandran)",
-    "leadership": "Leadership Intel",
+    "leadership": "Leadership",
+    "notifications": "Notify Hub",
     "settings": "Settings"
   },
   "roles": {

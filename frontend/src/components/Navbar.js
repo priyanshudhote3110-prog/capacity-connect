@@ -17,55 +17,84 @@ class NavbarComponent {
     const isTrainerOrAdmin = user && (user.role === "trainer" || user.role === "admin");
     const isAdmin = user && user.role === "admin";
 
-    // Navigation items with SVG icons
-    // Base items accessible to all users (including Employee)
+    const isHi = lang === "hi";
+
+    // Compact, highly legible navigation items with full tooltip accessibility
     const navItems = [
-      { key: 'home', label: t('nav.home', 'Home'), labelHi: 'होम', shortLabel: t('nav.home', 'Home'), icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>' },
-      { key: 'courses', label: t('nav.courses', 'Courses'), labelHi: 'पाठ्यक्रम', shortLabel: t('nav.courses', 'Courses'), icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>' },
-      { key: 'live', label: t('nav.liveClasses', 'Classroom'), labelHi: 'कक्षा', shortLabel: 'Classroom', icon: 'live' },
-      { key: 'exam', label: t('nav.examinations', 'Tests & Quiz'), labelHi: 'परीक्षा', shortLabel: 'Tests', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="m9 14 2 2 4-4"/></svg>' },
-      { key: 'certificates', label: t('nav.certificates', 'Certificates'), labelHi: 'प्रमाणपत्र', shortLabel: 'Certs', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>' }
+      { 
+        key: 'home', 
+        label: isHi ? 'होम' : 'Home', 
+        title: isHi ? 'मुख्य पोर्टल - राष्ट्रीय पृथ्वी विज्ञान क्षमता निर्माण' : 'National Portal Home', 
+        icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>' 
+      },
+      { 
+        key: 'courses', 
+        label: isHi ? 'पाठ्यक्रम' : 'Courses', 
+        title: isHi ? 'पाठ्यक्रम और शैक्षणिक प्लेलिस्ट' : 'Courses & Academic Playlists', 
+        icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>' 
+      },
+      { 
+        key: 'live', 
+        label: isHi ? 'लाइव' : 'Live', 
+        title: isHi ? 'लाइव इंटरएक्टिव वैज्ञानिक प्रसारण कक्षा' : 'Live Interactive Classroom Broadcast', 
+        icon: 'live' 
+      },
+      { 
+        key: 'exam', 
+        label: isHi ? 'परीक्षा' : 'Tests', 
+        title: isHi ? 'योग्यता मूल्यांकन एवं परीक्षा केंद्र' : 'Competency Examinations & Tests', 
+        icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="m9 14 2 2 4-4"/></svg>' 
+      },
+      { 
+        key: 'certificates', 
+        label: isHi ? 'प्रमाणपत्र' : 'Certs', 
+        title: isHi ? 'डिजिटल रूप से सत्यापित प्रमाणपत्र' : 'Verified Digital Certificates', 
+        icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>' 
+      }
     ];
 
     // Heatmap: Show ONLY if Trainer or Admin (HIDDEN for Employee)
     if (isTrainerOrAdmin) {
       navItems.push({
         key: 'heatmap',
-        label: t('nav.heatmap', 'Heatmap'),
-        labelHi: 'हीटमैप',
-        shortLabel: 'Heatmap',
-        icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'
+        label: isHi ? 'हीटमैप' : 'Heatmap',
+        title: isHi ? 'संस्थान कौशल अंतराल एवं क्षमता हीटमैप' : 'Institute Competency & Skill Gap Heatmap',
+        icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'
       });
     }
 
     // Forum: Visible to all
     navItems.push({
       key: 'forum',
-      label: t('nav.forum', 'Forum'),
-      labelHi: 'फोरम',
-      shortLabel: 'Forum',
-      icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
+      label: isHi ? 'फोरम' : 'Forum',
+      title: isHi ? 'वैज्ञानिक संदेह निवारण एवं चर्चा मंच' : 'Scientific Doubt & Discussion Forum',
+      icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
     });
 
     // Leaderboard: Show ONLY if Trainer or Admin (HIDDEN for Employee)
     if (isTrainerOrAdmin) {
       navItems.push({
         key: 'leaderboard',
-        label: t('nav.leaderboard', 'Ranks'),
-        labelHi: 'रैंक',
-        shortLabel: 'Ranks',
-        icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>'
+        label: isHi ? 'रैंक' : 'Ranks',
+        title: isHi ? 'वैज्ञानिक रैंकिंग एवं संस्थान लीडरबोर्ड' : 'Scientist Ranking & Institute Leaderboard',
+        icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>'
       });
     }
 
-    // RESTRICTED TO LEADERS / ADMINS ONLY: Executive Training & Skill-Gap Analytics
+    // RESTRICTED TO LEADERS / ADMINS ONLY: Executive Training, Skill-Gap Analytics & Notification Control
     if (isAdmin) {
       navItems.push({
         key: 'leadership',
-        label: t('nav.leadership', 'Leadership Intel'),
-        labelHi: 'नेतृत्व',
-        shortLabel: 'Leadership',
-        icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
+        label: isHi ? 'नेतृत्व' : 'Leadership',
+        title: isHi ? 'कार्यकारी नेतृत्व एवं कौशल विश्लेषण डैशबोर्ड' : 'Executive Leadership Intelligence Dashboard',
+        icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
+        isLeaderSpecial: true
+      });
+      navItems.push({
+        key: 'notifications',
+        label: isHi ? 'सूचना' : 'Notify Hub',
+        title: isHi ? 'अधिकारी निर्देशिका एवं अधिसूचना नियंत्रण केंद्र' : 'Officer Directory & Notification Control Desk',
+        icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>',
         isLeaderSpecial: true
       });
     }
@@ -73,36 +102,31 @@ class NavbarComponent {
     const renderNavLink = (item, idx) => {
       const isActive = this.appState.activeTab === item.key;
       const leaderBadge = item.isLeaderSpecial ? '<span class="leader-nav-dot" title="Executive Clearance"></span>' : '';
-      const shortText = item.shortLabel || item.label;
-      const labelMarkup = shortText !== item.label
-        ? `<span class="nav-text-full">${item.label}</span><span class="nav-text-short">${shortText}</span>`
-        : `<span class="nav-text">${item.label}</span>`;
 
       if (item.icon === 'live') {
-        return `<a class="nav-link ${isActive ? 'active' : ''}" data-nav="${item.key}" data-index="${idx}">
-          <span class="live-badge"><span class="pulse-dot"></span>LIVE</span>
-          ${labelMarkup}
+        return `<a class="nav-link ${isActive ? 'active' : ''}" data-nav="${item.key}" data-index="${idx}" title="${item.title || item.label}">
+          <span class="live-badge"><span class="pulse-dot"></span>${isHi ? 'लाइव' : 'LIVE'}</span>
         </a>`;
       }
-      return `<a class="nav-link ${isActive ? 'active' : ''} ${item.isLeaderSpecial ? 'nav-link-leader' : ''}" data-nav="${item.key}" data-index="${idx}" ${item.isLeaderSpecial ? 'style="color: var(--saffron-gold); font-weight: 700;"' : ''}>
+      return `<a class="nav-link ${isActive ? 'active' : ''} ${item.isLeaderSpecial ? 'nav-link-leader' : ''}" data-nav="${item.key}" data-index="${idx}" title="${item.title || item.label}">
         ${item.icon}
-        ${labelMarkup}
+        <span class="nav-text">${item.label}</span>
         ${leaderBadge}
       </a>`;
     };
 
     const renderMobileNavLink = (item) => {
       const isActive = this.appState.activeTab === item.key;
-      const leaderBadge = item.isLeaderSpecial ? '<span style="background: var(--saffron-gold); color: #000; font-size: 0.65rem; font-weight: 800; padding: 1px 6px; border-radius: 4px; margin-left: 6px;">LEADER</span>' : '';
+      const leaderBadge = item.isLeaderSpecial ? '<span style="background: var(--saffron-gold); color: #000; font-size: 0.65rem; font-weight: 800; padding: 1px 6px; border-radius: 4px; margin-left: 6px;">ADMIN</span>' : '';
       if (item.icon === 'live') {
         return `<a class="nav-link ${isActive ? 'active' : ''}" data-nav="${item.key}">
           <span class="live-badge" style="padding: 2px 6px; font-size: 0.65rem;"><span class="pulse-dot" style="width: 6px; height: 6px;"></span>LIVE</span>
-          ${item.label} <span style="font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-hindi);">(${item.labelHi})</span>
+          ${item.label}
         </a>`;
       }
       return `<a class="nav-link ${isActive ? 'active' : ''}" data-nav="${item.key}" ${item.isLeaderSpecial ? 'style="color: var(--saffron-gold); font-weight: 700;"' : ''}>
         ${item.icon}
-        ${item.label} <span style="font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-hindi);">(${item.labelHi})</span>
+        ${item.label}
         ${leaderBadge}
       </a>`;
     };

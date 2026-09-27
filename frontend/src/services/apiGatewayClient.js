@@ -210,6 +210,127 @@ class ApiGatewayClient {
       body: JSON.stringify(progressData)
     });
   }
+
+  /**
+   * EXECUTIVE: Get ministry-wide analytics
+   */
+  async getMinistryAnalytics() {
+    return await this.request("/api/admin/analytics", { method: "GET" });
+  }
+
+  /**
+   * EXECUTIVE: Dispatch ministerial cohort mandate
+   */
+  async mandateCohort(mandateData) {
+    return await this.request("/api/admin/mandate-cohort", {
+      method: "POST",
+      body: JSON.stringify(mandateData)
+    });
+  }
+
+  /**
+   * EXECUTIVE: Fetch active ministerial directives
+   */
+  async getDirectives() {
+    return await this.request("/api/admin/directives", { method: "GET" });
+  }
+
+  // ====================================================================
+  // EMPLOYEE NOTIFICATION SYSTEM CLIENT METHODS
+  // ====================================================================
+
+  /**
+   * Fetch employees directory with filters
+   */
+  async getEmployees(params = {}) {
+    const qs = new URLSearchParams(params).toString();
+    try {
+      return await this.request(`/api/admin/employees${qs ? '?' + qs : ''}`, { method: "GET" });
+    } catch (e) {
+      // Local storage fallback for standalone preview
+      const local = localStorage.getItem("moes_employees_db");
+      if (local) {
+        return { success: true, employees: JSON.parse(local), isOfflinePreview: true };
+      }
+      return { success: false, error: e.message };
+    }
+  }
+
+  /**
+   * Create new employee record
+   */
+  async createEmployee(data) {
+    try {
+      return await this.request("/api/admin/employees", {
+        method: "POST",
+        body: JSON.stringify(data)
+      });
+    } catch (e) {
+      console.warn("[Client] createEmployee offline notice:", e.message);
+      return { success: false, error: e.message };
+    }
+  }
+
+  /**
+   * Update employee record
+   */
+  async updateEmployee(id, data) {
+    try {
+      return await this.request(`/api/admin/employees/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(data)
+      });
+    } catch (e) {
+      console.warn("[Client] updateEmployee offline notice:", e.message);
+      return { success: false, error: e.message };
+    }
+  }
+
+  /**
+   * 1-Click Toggle circular preference icon (email / whatsapp)
+   */
+  async toggleEmployeeChannel(id, channel, enabled) {
+    try {
+      return await this.request(`/api/admin/employees/${id}/toggle`, {
+        method: "PATCH",
+        body: JSON.stringify({ channel, enabled })
+      });
+    } catch (e) {
+      console.warn("[Client] toggleEmployeeChannel offline notice:", e.message);
+      return { success: false, error: e.message };
+    }
+  }
+
+  /**
+   * Dispatch single or batch notification
+   */
+  async sendAdminNotification(payload) {
+    try {
+      return await this.request("/api/admin/notifications/send", {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+    } catch (e) {
+      console.warn("[Client] sendAdminNotification offline notice:", e.message);
+      return { success: false, error: e.message };
+    }
+  }
+
+  /**
+   * Fetch notification delivery logs
+   */
+  async getNotificationLogs(params = {}) {
+    const qs = new URLSearchParams(params).toString();
+    try {
+      return await this.request(`/api/admin/notifications/logs${qs ? '?' + qs : ''}`, { method: "GET" });
+    } catch (e) {
+      const local = localStorage.getItem("moes_notification_logs_db");
+      if (local) {
+        return { success: true, logs: JSON.parse(local), isOfflinePreview: true };
+      }
+      return { success: false, error: e.message };
+    }
+  }
 }
 
 // Global instance export

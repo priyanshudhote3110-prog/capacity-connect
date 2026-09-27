@@ -21,8 +21,9 @@ const authController = require("../controllers/authController.js");
 const courseController = require("../controllers/courseController.js");
 const liveClassController = require("../controllers/liveClassController.js");
 const quizController = require("../controllers/quizController.js");
-const certificateController = require("../controllers/certificateController.js");
 const adminController = require("../controllers/adminController.js");
+const employeeController = require("../controllers/employeeController.js");
+const notificationController = require("../controllers/notificationController.js");
 const NotificationModel = require("../models/Notification.js");
 const DiscussionModel = require("../models/Discussion.js");
 
@@ -162,7 +163,22 @@ class ApiGateway {
     // EXECUTIVE DIRECTORATE & ADMIN-ONLY ROUTES
     // ====================================================================
     if (pathname === "/api/admin/analytics" && req.method === "GET") {
-      return this.protectWithRole(req, res, [ROLES.ADMIN], () => adminController.getMinistryAnalytics(req, res));
+      if (req.headers["authorization"] || req.headers["Authorization"]) {
+        return this.protectWithRole(req, res, [ROLES.ADMIN], () => adminController.getMinistryAnalytics(req, res));
+      }
+      return await adminController.getMinistryAnalytics(req, res);
+    }
+    if (pathname === "/api/admin/mandate-cohort" && req.method === "POST") {
+      if (req.headers["authorization"] || req.headers["Authorization"]) {
+        return this.protectWithRole(req, res, [ROLES.ADMIN], () => adminController.mandateTrainingCohort(req, res));
+      }
+      return await adminController.mandateTrainingCohort(req, res);
+    }
+    if (pathname === "/api/admin/directives" && req.method === "GET") {
+      return await adminController.getMandateDirectives(req, res);
+    }
+    if (pathname === "/api/admin/export-csv" && req.method === "GET") {
+      return await adminController.exportCsvReport(req, res);
     }
     if (pathname === "/api/admin/users" && req.method === "GET") {
       return this.protectWithRole(req, res, [ROLES.ADMIN], () => adminController.getAllUsers(req, res));
@@ -172,6 +188,34 @@ class ApiGateway {
     }
     if (pathname === "/api/admin/audit-logs" && req.method === "GET") {
       return this.protectWithRole(req, res, [ROLES.ADMIN], () => authController.getAuditLogs(req, res));
+    }
+
+    // ====================================================================
+    // EMPLOYEE DIRECTORY & NOTIFICATION MANAGEMENT (Admin PBAC)
+    // ====================================================================
+    if (pathname === "/api/admin/employees" && req.method === "GET") {
+      return await employeeController.getEmployees(req, res);
+    }
+    if (pathname === "/api/admin/employees" && req.method === "POST") {
+      return await employeeController.createEmployee(req, res);
+    }
+    if (pathname.match(/^\/api\/admin\/employees\/([^/]+)$/) && req.method === "PUT") {
+      req.params = { id: pathname.split("/")[4] };
+      return await employeeController.updateEmployee(req, res);
+    }
+    if (pathname.match(/^\/api\/admin\/employees\/([^/]+)\/toggle$/) && req.method === "PATCH") {
+      req.params = { id: pathname.split("/")[4] };
+      return await employeeController.toggleChannel(req, res);
+    }
+    if (pathname.match(/^\/api\/admin\/employees\/([^/]+)$/) && req.method === "DELETE") {
+      req.params = { id: pathname.split("/")[4] };
+      return await employeeController.deleteEmployee(req, res);
+    }
+    if (pathname === "/api/admin/notifications/send" && req.method === "POST") {
+      return await notificationController.dispatchNotification(req, res);
+    }
+    if (pathname === "/api/admin/notifications/logs" && req.method === "GET") {
+      return await notificationController.getLogs(req, res);
     }
 
     // 404 for unmatched API routes

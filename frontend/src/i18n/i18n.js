@@ -26,7 +26,12 @@ class I18nEngine {
         this.translations.en = enRes;
         this.translations.hi = hiRes;
       } catch (err) {
-        console.warn("Could not load external i18n JSON files, using fallback.");
+        console.warn("Could not load external i18n JSON files, using offline built-in fallback.");
+        this.translations.en = this.translations.en || {
+          nav: { home: "Home", courses: "Courses", liveClasses: "Live", examinations: "Tests", certificates: "Certs", heatmap: "Heatmap", forum: "Forum", leaderboard: "Ranks", login: "Sign In", logout: "Sign Out", leadership: "Leadership", notifications: "Notify Hub", settings: "Settings" },
+          roles: { admin: "Admin", trainer: "Trainer / Faculty", employee: "Official / Learner" },
+          hero: { title: "National Earth Science Capacity Building Portal", subtitle: "Ministry of Earth Sciences (MoES), Govt. of India" }
+        };
       }
     }
     this.applyToDom();
